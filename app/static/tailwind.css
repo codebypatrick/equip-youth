@@ -1,0 +1,112 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+.bg-brand {
+	@apply .bg-green-700
+}
+.bg-brand-light {
+	@apply .bg-green-300
+}
+
+.bg-accent {
+	@apply .bg-orange-500
+}
+
+a {
+	@apply .text-green-700
+}
+
+a:hover {
+	@apply .text-green-500 .underline
+}
+
+table {
+	@apply .min-w-full .mb-5
+}
+th {
+	@apply .px-4 .py-3 .border-b .border-gray-200 .text-xs .font-semibold .text-gray-600 .uppercase .tracking-wider
+}
+td {
+	@apply .px-4 .py-3 .border-b .border-gray-200 .bg-white .text-sm
+}
+
+.btn {
+	@apply .px-4 .py-2 .font-bold .rounded
+}
+
+.btn-round {
+	@apply .px-4 .py-2 .font-bold .rounded-full
+}
+
+.btn-sm {
+	@apply .px-2 .py-1 .font-bold .rounded .text-sm
+}
+
+.btn-green {
+	@apply .bg-green-700 .text-white
+}
+
+.btn-red {
+	@apply .bg-red-500 .text-white
+}
+
+.btn-orange {
+	@apply .bg-orange-500 .text-white 
+}
+
+.success {
+	@apply .bg-green-400 .text-white 
+}
+
+.danger {
+	@apply .bg-red-500 .text-white
+}
+
+/* navigation */
+.nav-item {
+	@apply .inline-block .py-2 .px-4 .text-white .no-underline .border-transparent .border-b-2
+}
+
+.nav-item:hover {
+	@apply .border-white .no-underline .text-green-200
+}
+.nav-item-active {
+	@apply .border-white .no-underline
+}
+
+/* forms */
+.field-label {
+        @apply .block .uppercase .tracking-wide .text-gray-700 .text-xs .font-bold .mb-2
+}
+
+.field {
+        @apply .appearance-none .block .w-full .bg-gray-200 .text-gray-700 .border .border-gray-200 .rounded .py-3 .px-4 .mb-3 .text-gray-700 .leading-tight
+}
+
+.field:focus {
+        @apply .outline-none .bg-white .border-gray-500
+}
+
+.field-lg {
+        @apply .field .text-2xl                                                                                                 }
+
+/* breadcrumbs */
+.breadcrumb-link {
+	@apply .px-2 .py-1 .bg-green-200 .text-green-700 .inline-flex .rounded .items-center
+}
+
+.breadcrumb-link:hover {
+	@apply .text-white .bg-green-400 .no-underline
+}
+
+.breadcrumb-disabled {
+	@apply .px-2 .py-1 .bg-gray-200 .text-gray-700 .inline-flex .rounded .items-center
+}
+
+/* dashboard sidebar */
+.sidebar-link-active {
+	@apply .text-white .bg-accent
+}

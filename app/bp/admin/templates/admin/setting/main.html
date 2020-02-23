@@ -1,0 +1,46 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('settings',url_for('.setting_list'), 'list')}}
+{{macro.render_breadcrumb_link('Genaral', '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+
+{% block page_content %}
+<table>
+	<thead>
+		<th class="text-left">Setting</th>
+		<th></th>
+	</thead>
+	<tbody>
+	<tr>
+		<td>Navigation</td>
+		<td><a class="btn btn-green" href="{{url_for('.setting_navigation')}}">Edit</a></td>
+	</tr>
+	<tr>
+		<td>Hero</td>
+		<td><a class="btn btn-green" href="{{url_for('.setting_hero')}}">Edit</a></td>
+	</tr>
+	<tr>
+		<td>Intro</td>
+		<td><a class="btn btn-green" href="{{url_for('.setting_intro')}}">Edit</a></td>
+	</tr>
+	<tr>
+		<td>Features</td>
+		<td><a class="btn btn-green" href="{{url_for('.setting_feature')}}">Edit</a></td>
+	</tr>
+
+	<tr>
+		<td>Marketing</td>
+		<td><a class="btn btn-green" href="{{url_for('.setting_marketing')}}">Edit</a></td>
+	</tr>
+	</tbody>
+</table>
+	
+{% endblock %}

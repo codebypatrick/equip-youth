@@ -1,0 +1,87 @@
+{% extends 'main/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block page_content %}
+
+{% if hero %} 
+	{% for h in hero.items %}
+	{{macro.hero(h)}}
+	{% endfor %}
+{% endif %}
+<!-- NEW -->
+
+<!-- End NEW -->
+{% if marketing %}
+<section id="marketing" class="border-b py-12">
+<h2 class="w-full my-2 text-xl font-black leading-tight text-center text-gray-800 lg:mt-8">
+	Why {{g.app_name}}
+		 </h2>
+		 <div class="w-full mb-4">
+			 <div class="h-1 mx-auto bg-purple-500 w-64  my-0 py-0 rounded-t" ></div>
+		 </div>
+		<div class="container mx-auto">
+<!--Posts Container-->
+				<div class="flex flex-wrap justify-between pt-12">
+
+					{% for m in marketing %}
+					<!--1/3 col -->
+					<div class="w-full md:w-1/3 p-2 flex flex-col">
+					<div class="py-4 text-center rounded-t rounded-b-none shadow-lg p-6">
+					<img src="{{m.image}}" class="rounded" alt="{{m.heading}}">
+					<h2 class="text-xl py-3">{{m.heading}}</h2>
+					<p class="text-gray-700 mb-4">{{m.body | truncate(100)}}</p>
+					
+				</div>	
+						<div class="flex-none mt-auto bg-white rounded-b rounded-t-none shadow-lg p-6">
+							<div class="flex items-center justify-center">
+								
+								<a class="btn btn-orange" href="">Read More</a>
+							</div>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+		</div>
+	
+</section>
+{% endif %}
+{% if intro %} {{macro.intro(intro)}}{% endif %}
+
+<section id="marketing" class="bg-orange-100 border-b py-12">
+<h2 class="w-full my-2 text-xl font-black leading-tight text-center text-gray-800 lg:mt-8">
+	 Looking for a specific course?
+		 </h2>
+		 <div class="w-full mb-4">
+			 <div class="h-1 mx-auto bg-green-500 w-64  my-0 py-0 rounded-t" ></div>
+		 </div>
+		<div class="container mx-auto bg-white rounded-xl shadow">
+			{% for c in courses %}
+		 <div class="border-b px-4 py-4 hover:bg-green-100">
+			 <h2 class="text-lg mb-2 font-bold">
+				 <a href="{{url_for('.course', slug=c.slug)}}">{{c.name}}</a>
+			 </h2>
+			 <p>{{c.description| truncate(200) }}</p>
+		 </div>
+		 {% endfor %}
+		</div>
+	
+</section>
+{% if features %} {{macro.features(features)}}{% endif %}
+
+				<!--Subscribe-->	
+				<div class="bg-orange-500 rounded  p-4 md:p-24 text-center">
+					<h2 class="font-bold break-normal text-2xl md:text-4xl text-white">Contact us today</h2>
+					<h3 class="font-bold break-normal font-normal text-yellow-200 text-base md:text-xl">Our dedicated staff will be ready to help you</h3>
+					<div class="w-full text-center pt-4">
+						<form action="#">
+							<div class="max-w-xl mx-auto p-1 pr-0 flex flex-wrap items-center">
+								<input type="email" placeholder="youremail@example.com" class="flex-1 appearance-none rounded shadow p-3 text-gray-600 mr-2 focus:outline-none">
+								<button type="submit" class="flex-1 mt-4 md:mt-0 block md:inline-block appearance-none bg-brand text-white text-base font-semibold tracking-wider uppercase py-4 rounded shadow hover:bg-teal-400">Send</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- /Subscribe-->
+
+
+{% endblock %}

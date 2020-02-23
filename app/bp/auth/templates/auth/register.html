@@ -1,0 +1,46 @@
+{% extends 'auth/layout.html' %}
+{% import 'macros.html' as macro %}
+
+
+{% block title %} Register{% endblock %}
+
+{% block heading %} Create Account {% endblock %}
+
+{% block links %}
+<a href="{{url_for('.login')}}" class="text-xs">Already have account?</a>
+{% endblock %}
+
+{% block page_content %}
+<form class="form-horizontal w-3/4 mx-auto" method="post">
+	{{form.hidden_tag()}}
+<div class="md-4">
+	<label class="field-label" for="email">Email Address</label>
+	<input id="email" type="text" name="email" class="field">
+	{{macro.field_error(form.email)}}
+</div>
+<div class="mb-4">
+	<label class="field-label" for="username">Username</label>
+	<input id="username" type="text" name="username" class="field">
+	{{macro.field_error(form.username)}}
+</div>
+<div class="mb-4">
+	<label class="field-label" for="full_name">Full Name</label>
+	<input id="full_name" type="text" name="full_name" class="field">
+	{{macro.field_error(form.full_name)}}
+</div>
+
+<div class="mb-4">
+	<label class="field-label" for="password">Password</label>
+	<input id="password" type="password" name="password" class="field">
+	{{macro.field_error(form.password)}}
+</div>
+<div class="mb-4">
+	<label class="field-label" for="password2">Repeat Password</label>
+	<input id="password2" type="password" name="password2" class="field">
+	{{macro.field_error(form.password2)}}
+</div>
+<div class="flex flex-col mt-8">
+	<button class="btn btn-green">Create Account</button>
+</div>
+</form>
+{% endblock %}

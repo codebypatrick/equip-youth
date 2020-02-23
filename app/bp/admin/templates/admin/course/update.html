@@ -1,0 +1,34 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.course_list'))}}
+{% endblock %}
+{% block page_content %}
+	<form  method="post" novalidate>
+		{{form.hidden_tag()}}
+		
+		<div class="mb-4">
+			<label for="full_name">Full name</label>
+			<input id="full_name" type="text" name="full_name" 
+				value="{% if user %} {{user.full_name}} {% endif %}">
+			{{macro.field_error(form.full_name)}}
+		</div>
+
+		<div class="mb-4">
+			<label for="role">Role</label>
+			<select id="role" name="role">
+				{% for value, label, _ in form.role.iter_choices() %}
+				<option value="{{value}}" 
+					{% if value == user.role %} selected {% endif %}>{{label | title}}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+
+		<div class="mb-4">
+			<button>Save</button>
+		</div>
+	</form>
+{% endblock %}

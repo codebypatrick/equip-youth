@@ -1,0 +1,30 @@
+{% extends 'main/layout.html' %}
+{% import 'macros.html' as macro %}
+{% block title %} Courses{% endblock %}
+
+{% block page_content %}
+<section id="marketing" class="bg-orange-100 border-b py-12">
+<h2 class="w-full my-2 text-xl font-black leading-tight text-center text-gray-800 lg:mt-8">
+	 Courses
+		 </h2>
+		 <div class="w-full mb-4">
+			 <div class="h-1 mx-auto bg-orange-500 w-64  my-0 py-0 rounded-t" ></div>
+		 </div>
+		<div class="container mx-auto bg-white rounded-xl shadow">
+			{% for c in courses %}
+			
+		 <div class="border-b px-4 py-4 hover:bg-green-100 text-lg">
+			 <h2 class="text-lg mb-2 font-bold">
+				 <a href="{{url_for('.course', slug=c.slug)}}" class="flex">
+					 {% for m in c.media %}
+				 <img class="h-16 mr-2 rounded" src="{{m.url}}" alt="{{c.name}}">
+				 {% endfor %}
+				 {{c.name}}</a>
+			 </h2>
+			 <p>{{c.description| truncate(200) }}</p>
+		 </div>
+		 {% endfor %}
+		</div>
+	
+</section>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('settings',url_for('.setting_list'), 'list')}}
+{{macro.render_breadcrumb_link('JSON Builder', '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+
+{% block page_content %}
+<form method="post" enctype="multipart/form-data">
+
+<div class="flex justify-between px-4 py-2">
+	<div class="flex flex-col">
+		<div>
+		
+			<div class="mb-4">
+				<label class="field-label">Field</label>
+				<input class="field" type="text" name="key">
+				<span class="text-xs text-gray-500">Type attachment to add file</span>
+			</div>
+		
+			<button id="createField" class="btn bg-gray-300">Save</button>
+		
+		</div>
+		<div class="px-4 py-2 mt-4">
+			{% if schema %}		
+			<p class="text-sm"><span class="font-bold text-gray-500">Fields</span> 
+			{% for s in schema %}
+				<span class="px-2 py-1 bg-orange-500 rounded text-white mr-2">{{s}}</span>
+			{% endfor %}
+			</p>
+			{% endif %}
+			{% if data %}
+			<p class="font-bold leading-loose mt-2">Copy the text below and paste it in the setting value</p>
+			<p class="bg-gray-200 rounded px-2 py-1">{{data}}</p>
+			{% endif %}
+		</div>
+	</div>
+	<div class="flex flex-col flex-wrap">
+	
+		{% if fields %}	
+			{{fields|safe}}
+			<button class="btn bg-gray-400">Add</button>
+		{% endif %}
+	
+	
+		
+		</div>
+	</div>
+<div class="flex justify-center">
+	
+	<a class="btn btn-orange mr-4" href="{{url_for('.setting_json_clear')}}">Reset</a>
+	<a class="btn btn-green" href="{{url}}">Done</a>
+</div>
+</div>
+
+</form>
+{% endblock %}
+
+{% block js %}
+<script>
+
+</script>
+{% endblock %}

@@ -1,0 +1,81 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('settings',url_for('.setting_list'), 'list')}}
+{{macro.render_breadcrumb_link('Intro', '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+
+{% block page_content %}
+{{setting.value}}
+<div id="app">
+<div class="flex">
+	<div class="w-1/2 px-2">
+		<form>
+			<div class="mb-4">
+				<label class="field-label" for="">Heading</label>
+				<input class="field" type="text" v-model="intro.heading">
+			</div>
+			<div class="mb-4">
+				<label class="field-label" for="">Content</label>
+				<textarea  name="" cols="5" rows="3" v-model="intro.body" class="field"></textarea>
+			</div>
+			<div class="mb-4">
+				<label class="field-label" for="">Color</label>
+				<input  class="field" type="text" v-model="intro.color">
+			</div>
+
+			
+			
+		</form>
+	</div>
+	<div class="w-1/2 px-2">
+		
+		<h2 class="text-lg font-bold" v-if="intro.heading">${intro.heading}</h2>
+		
+		<p v-if="intro.body">${intro.body}</p>
+	
+	</div>
+</div>
+<div>
+	<form method="post">
+		<div class="mb-4">
+			<input  type="hidden" name="intro" :value="JSON.stringify(intro)" readonly>
+		</div>
+		<button class="btn btn-green">Done</button>
+	</form>
+</div>
+</div>
+
+	
+{% endblock %}
+
+{% block js %}
+{{super()}}
+<script src="{{url_for('static', filename='js/vue.js')}}"></script>
+<script src="{{url_for('static', filename='js/axios.js')}}"></script>
+<script>
+	//hero schema
+	var intro = { 
+				heading: '',
+				body: '',
+				color: 'bg-gray-700'
+
+		}
+	
+	//hero setting from database
+	var setting = {% if setting.value %} JSON.parse({{setting.value|tojson}}) {% else %} intro{% endif %}  
+	
+	var vm = new Vue({
+		el: '#app',
+		delimiters: ['${', '}'],
+		data: { intro: setting }
+	});
+</script>
+{% endblock %}

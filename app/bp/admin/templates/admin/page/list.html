@@ -1,0 +1,58 @@
+{% extends 'admin/layout.html' %}
+
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('pages','', 'list')}}
+
+{% endblock %}
+
+{% block options %}
+<a class="btn btn-orange flex items-center" href="{{url_for('.page_create')}}">
+	{{macro.svg('plus') }} New</a>
+{% endblock %}
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.page_list'))}}
+{% endblock %}
+
+
+
+{% block page_content %}
+
+{% if pages %}
+<form method="post">
+	<table>
+		<thead>
+			<tr>
+			<th class="w-6"><input id="selectAll" type="checkbox"> </th>
+	
+			<th class="text-left">Page</th>
+			<th class="text-left">Author</th>
+			<th class="text-left">Last modified</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for p in pages.items %}
+				<tr>
+					<td>
+						<input class="check" type="checkbox" name="page_id" value="{{p.uuid}}">
+					</td>
+					<td><a href="{{url_for('.page_update', uuid=p.uuid)}}">{{p.name}}</a></td>
+					<td>{{p.author.username}}</td>
+					<td>{{p.modified}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="mb-4 pager">
+		<button class="btn-sm btn-red">Delete</button>
+	</div>
+</form>
+{% else %}
+	{% include 'no_records.html' %}
+{% endif %}
+
+
+{% endblock %}

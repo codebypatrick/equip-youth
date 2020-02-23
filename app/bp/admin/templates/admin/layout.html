@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% import 'macros.html' as macro %}
+
+{% block content %}
+
+<div class="flex bg-green-100 ">
+<div class="sidebar w-1/5">
+	<div class="logo px-4 py-3 bg-brand">
+		<h2 class="text-xl text-white">Dashoard</h2>
+	</div>
+
+	<div class="menu h-screen bg-brand-light px-4 py-3">
+		{% block sidebar %}{% endblock %}		
+	</div>
+</div>
+<div class="w-4/5">
+	<div class="flex px-4 py-3 bg-accent items-center border-b justify-between shadow">
+		<div class="">
+			<h2 class="text-xl text-white font-bold">Equip Youth Africa</h2>
+		</div>
+
+		<div class="">logout</div>
+	</div>
+	<!-- content -->
+	<div class="px-4 py-2 mt-2 mx-auto">
+		<div class="px-4 py-2 flex rounded-t justify-between items-center border-b-2 border-green-700 bg-brand-light shadow">
+			<div class="flex items-center text-xs font-bold">
+				{{ macro.render_breadcrumb_link('Dashboard', url_for('.index'), 'dashboard')}}
+					
+				{% block breadcrumb %} {% endblock %}
+			</div>
+			<div class="flex text-xs font-bold">
+				{% block options %}{% endblock %}
+			</div>
+		</div>
+		<div class="px-2 py-2 mx-auto border bg-white shadow">
+		{% block page_content %}{% endblock%}
+		</div>
+	</div>
+
+
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block css %}
+{# debug console for mobile remove in desktop/production #}
+<link rel="stylesheet" href="{{url_for('static', filename='console/mobile-console.min.css')}}">
+{# end debug console #}
+{% endblock %}
+
+
+{% block js %}
+<script>
+var selectAll = document.getElementById('selectAll')
+
+selectAll.addEventListener('change', function(){
+	var inputs = document.getElementsByClassName('check')
+
+	for(var i=0; i < inputs.length; i++) {
+		inputs[i].checked = this.checked
+	}
+
+})
+
+
+</script>
+{# debug console for mobile remove in desktop/production #}
+<script src="{{url_for('static', filename='console/mobile-console.min.js')}}"></script>
+<script>
+	mobileConsole.show()
+</script>
+{# end console #}
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('settings',url_for('.setting_list'), 'list')}}
+{{macro.render_breadcrumb_link('Features', '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+
+
+{% block page_content %}
+
+<div id="app">
+<div class="flex">
+	<div class="w-1/2 px-2">
+		<form @submit.prevent="addFeature">
+			<div class="mb-4">
+				<label class="field-label" for="">Heading</label>
+				<input class="field" type="text" v-model="feature.heading" id="heading">
+			</div>
+			<div class="mb-4">
+				<label class="field-label" for="">Content</label>
+				<textarea  class="field"  cols="3" rows="5" v-model="feature.body"></textarea>
+			</div>
+
+			<div class="mb-4">
+				<label class="field-label" for="">
+					Image
+					<input type="file" @change="handleFileUpload">
+				</label>
+				${file}	
+			</div>
+
+			<div class="mb-4">
+				<label class="field-label" for="">Link</label>
+				<input type="text" v-model="feature.url" class="field">
+			</div>
+
+		
+		<button class="btn btn-orange">Add feature</button>
+		</form>
+	</div>
+	<div class="w-1/2 px-2">
+		<div  v-for="(f, index) in features" class="px-2 py-1 border rounded mb-2"> 
+		<h2 class="text-lg font-bold" v-if="f.heading">${f.heading}</h2>
+		
+		<p v-if="f.body">${f.body}</p>
+
+
+		<div class="flex justify-between" v-if="f.image.url">
+			<img :src="f.image.url" :alt="f.heading">
+			<button class="border px-2 py-1" @click.prevent="deleteImage(f)">Delete</button>
+		</div>
+		<button class="btn-sm bg-gray-400" @click.prevent="deleteFeature(f, index)">Delete</button>
+		</div>
+		
+	</div>
+</div>
+<div>
+	${features}
+	<form method="post">
+		<div class="mb-4">
+			<input  type="text" name="features" :value="JSON.stringify(features)" class="field" readonly>
+		</div>
+		<button class="btn btn-green">Done</button>
+	</form>
+</div>
+</div>
+	
+{% endblock %}
+
+{% block js %}
+{{super()}}
+<script src="{{url_for('static', filename='js/vue.js')}}"></script>
+<script src="{{url_for('static', filename='js/axios.js')}}"></script>
+<script>
+	//TODO: fix delete image
+	//TODO: edit individual features
+	//hero schema
+	var feature = {
+				heading: '',
+				body: '',	
+				image: {
+					path: '',
+					url: ''
+				},
+				url:''
+			}
+	
+	//hero setting from database
+var setting = {% if setting.value %} JSON.parse({{setting.value|tojson}}) {% else %} []{% endif %}  
+	
+	var vm = new Vue({
+		el: '#app',
+		delimiters: ['${', '}'],
+		data: {
+			feature:feature,
+			features: setting,
+			file: ''
+		},
+		methods: {
+			addFeature: function(e) {
+				if(this.file){
+				var formData = new FormData()
+				
+
+				formData.append('file', this.file)
+
+				axios.post('/admin/upload', formData, {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				}).then(function(data){
+					var res = data.data
+	
+					this.feature.image = {url: res.url, path: res.path}
+					//console.log(res)
+				}).catch(function(err){
+					console.log(err)
+
+				})
+	//upload to server
+
+				}
+				this.features.push(this.feature)
+				this.file = ''
+				this.feature = {}
+				
+			/*	
+				this.feature ={
+				heading: '',
+				body: '',
+				url:''
+			}*/
+ 
+				e.target.reset()
+				
+			
+			},
+			deleteFeature: function(feature, index) {
+				//remove any image
+				//remove from list
+				console.log(feature)
+			},
+			handleFileUpload: function(e) {
+				//clear previous image
+			
+				
+				//
+				this.file = e.target.files[0];
+				
+								//clear file
+				
+
+				
+			},
+			deleteImage: function(feature) {
+				if (feature.image.path) {
+					var formData = new FormData()
+					
+
+					formData.append('path', feature.image.path)
+
+					axios.post('/admin/delete/file', formData, {
+						headers: {
+							'Content-Type': 'multipart/form-data'
+						}
+					}).then(function(data){
+						var response = data.data
+		
+						feature.image = {}
+						console.log(response)
+					}).catch(function(e){
+						console.log(e)
+
+					})
+	
+				}
+
+			}
+		}
+	});
+</script>
+{% endblock %}

@@ -1,0 +1,161 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('settings',url_for('.setting_list'), 'list')}}
+{{macro.render_breadcrumb_link('Hero', '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+
+{% block page_content %}
+
+<div id="app">
+<div class="flex">
+	<div class="w-1/2 px-2">
+		<form>
+			<div class="mb-4">
+				<label class="field-label" for="">Heading</label>
+				<input class="field" type="text" v-model="hero.heading">
+			</div>
+			<div class="mb-4">
+				<label class="field-label" for="">Tagline</label>
+				<input  class="field" type="text" v-model="hero.tagline">
+			</div>
+
+			<div class="mb-4">
+				<label class="field-label" for="">
+					Image
+					<input type="file"  @change="handleFileUpload">
+				</label>
+				
+			</div>
+
+			<div class="mb-4">
+				<label class="field-label" for="">Action text</label>
+				<input type="text" v-model="hero.action.text" class="field">
+			</div>
+
+			<div class="mb-4">
+				<label class="field-label" for="">Action link</label>
+				<input  type="text" v-model="hero.action.url" class="field">
+			</div>
+
+			
+		</form>
+	</div>
+	<div class="w-1/2 px-2">
+		
+		<h2 class="text-lg font-bold" v-if="hero.heading">${hero.heading}</h2>
+		
+		<p v-if="hero.tagline">${hero.tagline}</p>
+
+		<div class="flex justify-between" v-if="hero.image.url">
+			<img :src="hero.image.url" :alt="hero.heading">
+			<button class="border px-2 py-1" @click.prevent="deleteImage">Delete</button>
+		</div>
+		
+	</div>
+</div>
+<div>
+	<form method="post">
+		<div class="mb-4">
+			<input  type="hidden" name="hero" :value="JSON.stringify(hero)" readonly>
+		</div>
+		<button class="btn btn-green">Done</button>
+	</form>
+</div>
+</div>
+	
+{% endblock %}
+
+{% block js %}
+{{super()}}
+<script src="{{url_for('static', filename='js/vue.js')}}"></script>
+<script src="{{url_for('static', filename='js/axios.js')}}"></script>
+<script>
+	//hero schema
+	var hero = {
+				heading: '',
+				tagline: '',
+				image: {
+					path: '',
+					url: ''
+				},
+				action: {
+					text: '',
+					url: ''
+				}
+			}
+	
+	//hero setting from database
+var setting = {% if setting.value %} JSON.parse({{setting.value|tojson}}) {% else %} hero{% endif %}  
+	
+	var vm = new Vue({
+		el: '#app',
+		delimiters: ['${', '}'],
+		data: {
+			hero: setting,
+			dbHero: {},
+			file: ''
+		},
+		methods: {
+			handleFileUpload: function(e) {
+				
+				//
+				this.file = e.target.files[0];
+				
+				var formData = new FormData()
+				
+
+				formData.append('file', this.file)
+
+				axios.post('/admin/upload', formData, {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				}).then(function(data){
+					var res = data.data
+	
+					this.hero.image.url = res.url
+					this.hero.image.path = res.path
+					//console.log(res)
+				}).catch(function(e){
+					console.log(e)
+
+				})
+	
+				
+			},
+			deleteImage: function() {
+				if (hero.image.path) {
+					var formData = new FormData()
+					
+
+					formData.append('path', this.hero.image.path)
+
+					axios.post('/admin/delete/file', formData, {
+						headers: {
+							'Content-Type': 'multipart/form-data'
+						}
+					}).then(function(data){
+						var response = data.data
+		
+						this.hero.image = {}
+						console.log(response)
+					}).catch(function(e){
+						console.log(e)
+
+					})
+	
+				}
+
+			}
+		}
+	});
+</script>
+{% endblock %}

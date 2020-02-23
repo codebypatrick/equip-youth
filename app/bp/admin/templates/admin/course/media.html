@@ -1,0 +1,60 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+
+{% block breadcrumb %}
+ <span class="items-center px-2 py-1 rounded bg-gray-200 inline-flex text-gray-700 ml-2">{{macro.svg('user')}} Users</span>
+{% endblock %}
+
+{% block options %} 
+<a href="{{url_for('.user_create')}}" class="btn-round btn-orange items-center inline-flex">
+	{{macro.svg('user', 5)}} <span class="ml-2">New</span>
+</a>
+{% endblock %}
+
+{% block page_content %}
+<div class="md:flex md:justify-between">
+<div class="flex ">	
+	<form  method="post" enctype="multipart/form-data" novalidate>
+		{{form.hidden_tag()}}
+
+		
+		
+		<div class="mb-4">
+			<label for="name" class="field_label">Name</label>
+			<input id="name" type="text" name="name" class="field" >
+			{{macro.field_error(form.name)}}
+		</div>
+
+	
+
+		<div class="mb-4">
+			<label class="field-label" for="media">File</label>
+			<input id="media" type="file" name="media">
+			{{macro.field_error(form.media)}}
+		</div>
+
+
+		<div class="mb-4">
+			<button class="btn btn-green">Save</button>
+		</div>
+	</form>
+</div>
+<div class="media flex-1  px-2 py-2  m-2">
+<h2 class="text-gray-700 font-bold uppercase text-sm text-orange-500  mb-4">Media</h2>	
+	{% if course.media %}
+	<form action="{{url_for('.media_delete')}}" method="post">
+		{{macro.render_media_list(course.media) }}
+			
+		<input type="hidden" name="back" value="{{request.url}}">
+		<div class="flex rounded justify-end px-4 py-2 border">
+			<button class="btn btn-orange">Delete Selected Media</button>
+		</div>
+		
+		</form>
+
+
+	{% endif %}
+</div>
+</div>
+{% endblock %}

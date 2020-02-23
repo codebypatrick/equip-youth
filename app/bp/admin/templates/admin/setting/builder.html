@@ -1,0 +1,177 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('settings',url_for('.setting_list'), 'list')}}
+{{macro.render_breadcrumb_link('JSON Builder', '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+
+{% block page_content %}
+<h2 class="text-xl">Settings builder</h2>
+<div id="app">
+	<div class="field-form">
+		<form @submit.prevent="addToSchema">
+			<label class="field-label" for="">Name</label>
+			<input v-model="field.label" class="field">
+			<label class="field-label" for="">Type</label>
+			<select v-model="field.type" class="field">
+				<option value="text">Text</option>
+				<option value="file">File</option>
+			</select>
+			<button class="btn btn-orange">Add</button>
+		</form>
+		
+	</div>
+	<div>
+		<form @submit.prevent="save">
+			<div v-for="item, key in schema">
+				<label for="" class="field-label">${item.label}</label>
+				<input v-if="item.type == 'text'" type="text"  class="field" v-model="formData[item.label]">
+				<label v-if="item.type == 'file'">${item.label}
+					<input type="file"  ref="file" @change="handleFileUpload"/>
+			      </label>
+
+			</div>
+			<button class="btn btn-orange">Save</button>
+		</form>
+
+		${formData}
+	</div>
+
+	<div class="flex">
+		<div class="flex flex-col">
+			<form class="mb-4" @submit.prevent="addKey">
+				<div class="mb-4">
+					<input class="border px-2 py-1" placeholder="key" type="text" v-model="key">
+					<input  type="file" ref="file" @change="uploadFile">
+				</div>
+				<button class="btn btn-green">Add Field</button>
+			</form>
+
+			<form>
+				<div class="mb-4">
+					<label for="">
+						<input type="file" ref="file">
+					</label>
+				</div>
+				<button class="btn btn-green">Add File</button>
+			</form>
+		</div>
+		<div class="flex flex-col">
+			<div>
+				<form>
+					<div v-for="item in setting" class="mb-4">
+						<label for="">${item}</label>
+						<input  type="text" v-model="form[item]" class="border">
+					</div>
+				</form>
+			</div>
+			<div>Result
+			<br>
+			${setting}
+			</div>
+
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+{{super()}}
+<script src="{{url_for('static', filename='js/vue.js')}}"></script>
+<script src="{{url_for('static', filename='js/axios.js')}}"></script>
+<script>
+//create an input object
+//add input object to schema
+//create form from schema
+var vm = new Vue({
+	el: '#app',
+	delimiters: ['${', '}'],
+	data:{
+		field: {
+			label:'',
+			type:''
+		},
+		file: '',
+		schema: [],
+		formData: {},
+		key: '',
+		value:'',
+		setting: [],
+		form: {},
+		fileobj: {}
+
+	},
+	methods: {
+		addKey: function() {
+			this.setting.push(this.key)
+		},
+		uploadFile: function(e){
+			//upload if key preset
+			if (this.key) {
+				this.file = e.target.files[0];
+
+				var formData = new FormData()
+				
+
+				formData.append('file', this.file)
+
+				axios.post('/admin/upload', formData, {
+					headers: {
+						'Content-Type': 'multipart/form-data'
+					}
+				}).then(function(data){
+					var response = data.data
+	
+					this.setting.push({path: response.path, url: response.url})
+					console.log(response)
+				}).catch(function(e){
+					console.log(e)
+
+				})
+
+				//this.fileobj = {}
+			}
+		},
+		addToSchema: function() {
+			//make default type if not given 
+			if (this.field.type == ''){
+				this.field.type = 'text'
+			}
+			this.schema.push(this.field)
+			this.field = {}
+		},
+		save: function() {
+			JSON.stringify(this.formData)
+		},
+		handleFileUpload: function(e) {
+			//get first element in files array
+			this.file = e.target.files[0]
+			
+			//initialize form data
+			var formData = new FormData()
+			formData.append('file', this.file)
+			
+			//post form data
+			axios.post('/admin/upload', formData, {
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}).then(function(data){
+
+				console.log(data)
+
+			}).catch(function(e){
+				console.log(e)
+			})
+		}
+	}
+
+})
+</script>
+{% endblock %}

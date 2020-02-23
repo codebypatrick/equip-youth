@@ -1,0 +1,58 @@
+{% extends 'admin/layout.html' %}
+
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('courses','', 'list')}}
+
+{% endblock %}
+
+{% block options %}
+<a class="btn btn-orange flex items-center" href="{{url_for('.course_create')}}">
+	{{macro.svg('plus') }} New</a>
+{% endblock %}
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.course_list'))}}
+{% endblock %}
+
+{% block page_content %}
+
+{% if courses %}
+
+<!-- search -->
+<form method="post">
+	<table class="min-w-full">
+		<thead>
+			<tr>
+			<th class="w-6"><input id="selectAll" type="checkbox"> </th>
+	
+			<th class="text-left">Course</th>
+			<th class="text-left">Author</th>
+			<th class="text-center">Last modified</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for c in courses.items %}
+				<tr>
+					<td>
+						<input class="check" type="checkbox" name="course_id" value="{{c.uuid}}">
+					</td>
+					<td><a href="{{url_for('.course_update', uuid=c.uuid)}}">{{c.name}}</a></td>
+					<td>{{c.creator.username}}</td>
+					<td class="text-center">{{c.modified}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="mb-4 pager">
+		<button class="rounded bg-red-500 font-bold text-sm text-white px-2 py-1">Delete</button>
+
+	</div>
+</form>
+{% else %}
+	{% include 'no_records.html' %}
+{% endif %}
+
+
+{% endblock %}

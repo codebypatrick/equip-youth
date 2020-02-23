@@ -1,0 +1,71 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('courses',url_for('.course_list'), 'list')}}
+{{macro.render_breadcrumb_link(action, '')}}
+{% endblock %}
+
+
+{% block options %} 
+{% if course %}
+<div class="inline-flex">
+<span class="py-2 px-4 rounded-l-full bg-accent text-white">{{macro.svg('plus')}}</span>
+<a class="bg-accent font-bold text-white py-2 px-4" 
+   href="{{url_for('.course_image_create', uuid=course.uuid)}}">Image</a>
+<a class="rounded-r-full bg-accent font-bold text-white py-2 px-4"
+   href="{{url_for('.course_docs_create', uuid=course.uuid)}}">Document</a>
+</div>
+
+{% endif %}
+{% endblock %}
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.course_list'))}}
+{% endblock %}
+{% block page_content %}
+	<form  method="post" novalidate>
+		{{form.hidden_tag()}}
+		<div class="mb-4">
+			<input id="name" 
+				type="text" 
+				name="name"
+				class="field-lg"
+				placeholder="Untitled Course"
+				value="{% if course %}{{course.name}}{% endif %}">
+			{{macro.field_error(form.name) }}
+		</div>
+	
+		<div class="mb-4">
+			<label class="field-label" for="lead">Intro </label>
+			<input id="lead"
+			       class="field" 
+			       type="text"
+			       name="lead"
+			       placeholder="Intro text"
+			       value="{% if course %}{{course.lead}}{% endif %}">
+			
+		</div>	
+		<div class="mb-4">
+			<textarea id="description"
+				name="description" 
+				placeholder="Description"
+				class="field text-lg" 
+				rows="3">{% if course %}{{course.description}}{% endif %}</textarea>
+			{{macro.field_error(form.description)}}
+		</div>
+
+		<div class="mb-4">
+			<textarea id="body" 
+				name="body"
+				rows="10"
+				class="field text-lg"
+				placeholder="Course content">{% if course %}{{course.body}}{% endif %}</textarea>
+			{{macro.field_error(form.body)}}
+		</div>
+
+		<div class="mb-4">
+			<button class="btn btn-green">Save</button>
+		</div>
+	</form>
+{% endblock %}

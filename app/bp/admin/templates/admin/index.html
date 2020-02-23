@@ -1,0 +1,65 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.index'))}}
+{% endblock %}
+
+
+{% block page_content %}
+
+            <div class="bg-blue-800 p-2 shadow text-xl text-white">
+                <h3 class="font-bold pl-2">Analytics</h3>
+            </div>
+
+            <div class="flex flex-wrap">
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-green-100 border-b-4 border-green-600 rounded-lg shadow-lg p-5">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+				    
+				    <div class="rounded-full p-5 bg-green-600 text-white">{{macro.svg('pages', 6)}}</div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-600">Total Pages</h5>
+				<h3 class="font-bold text-3xl">{{page_count}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-orange-100 border-b-4 border-orange-500 rounded-lg shadow-lg p-5">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+				    <div class="rounded-full p-5 bg-orange-600">{{ macro.svg('user', 6)}}</div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-600">Total Users</h5>
+				<h3 class="font-bold text-3xl">{{user_count}}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+                <div class="w-full md:w-1/2 xl:w-1/3 p-3">
+                    <!--Metric Card-->
+                    <div class="bg-yellow-100 border-b-4 border-yellow-600 rounded-lg shadow-lg p-5">
+                        <div class="flex flex-row items-center">
+                            <div class="flex-shrink pr-4">
+				    <div class="rounded-full p-5 bg-yellow-600">{{macro.svg('graduation', 6)}}</div>
+                            </div>
+                            <div class="flex-1 text-right md:text-center">
+                                <h5 class="font-bold uppercase text-gray-600">Total Courses</h5>
+				<h3 class="font-bold text-3xl">{{ course_count }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/Metric Card-->
+                </div>
+               </div>
+            </div>
+{% endblock %}

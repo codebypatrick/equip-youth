@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+
+*.sw[op]
+
+node_modules/
+migrations/
+instance/
+venv/
+*.db

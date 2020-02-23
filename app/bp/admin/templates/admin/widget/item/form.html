@@ -1,0 +1,71 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('courses',url_for('.course_list'), 'list')}}
+{{macro.render_breadcrumb_link(action, '')}}
+{% endblock %}
+
+
+{% block options %} 
+
+{% endblock %}
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.widget_list'))}}
+{% endblock %}
+{% block page_content %}
+	<form  method="post" enctype="multipart/form-data"  novalidate>
+		{{form.hidden_tag()}}
+		<div class="mb-4">
+			<input 	type="text" 
+				name="heading"
+				class="field-lg"
+				placeholder="Heading"
+				value="{% if item %}{{item.heading}}{% endif %}">
+			{{macro.field_error(form.heading) }}
+		</div>
+		<div class="mb-4">
+			<input 	type="text" 
+				name="body"
+				class="field-lg"
+				placeholder="Content"
+				value="{% if item %}{{item.body}}{% endif %}">
+			{{macro.field_error(form.body) }}
+		</div>
+		<div class="mb-4">
+			{% if item.image_url %}
+				<img class="w-32 rounded" src="{{item.image_url}}" alt="item_{{uuid}}">
+			{% endif %}
+			<label class="field-label" for="media">{% if item.image_url %} Change {% endif %} Image</label>
+			<input id="image" type="file" name="image">
+			{{macro.field_error(form.image) }}
+		</div>
+		<div class="mb-4">
+			<input 	type="text" 
+				name="tagline"
+				class="field-lg"
+				placeholder="Tagline"
+				value="{% if item %}{{item.tagline}}{% endif %}">
+			{{macro.field_error(form.tagline) }}
+		</div>	
+		<div class="mb-4">
+			<input 	type="action" 
+				name="action"
+				class="field-lg"
+				placeholder="Action"
+				value="{% if item %}{{item.action}}{% endif %}">
+			{{macro.field_error(form.action) }}
+		</div>
+		<div class="mb-4">
+			<input 	type="text" 
+				name="action_url"
+				class="field-lg"
+				placeholder="Action URL"
+				value="{% if item %}{{item.action_url}}{% endif %}">
+			{{macro.field_error(form.action_url) }}
+		</div>	<div class="mb-4">
+			<button class="btn btn-green">Save</button>
+		</div>
+	</form>
+{% endblock %}

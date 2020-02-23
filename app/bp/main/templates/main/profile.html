@@ -1,0 +1,8 @@
+{% extends 'main/layout.html' %}
+{% import 'macros.html' as macro %}
+{% block title %} {{current_user.full_name }} {% endblock %}
+
+{% block page_content %}
+<h2>Welcome Back {{current_user.full_name}}</h2>
+
+{% endblock %}

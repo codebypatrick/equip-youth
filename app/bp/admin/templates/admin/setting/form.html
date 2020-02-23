@@ -1,0 +1,59 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('settings',url_for('.setting_list'), 'list')}}
+{{macro.render_breadcrumb_link(action, '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+
+{% block page_content %}
+	<form  method="post" novalidate>
+		{{form.hidden_tag()}}
+		<div class="mb-4">
+			<label class="field-label" for="name">Key</label>
+			<input id="name" class="field" type="text"
+				name="name"
+				{% if setting%} value="{{setting.name}}"{% endif %}>
+			{{macro.field_error(form.name) }}
+		</div>
+
+		<div class="mb-4">
+			<label class="field-label" for="value">Value
+				{% if not setting %}
+				<a class="btn-sm bg-gray-400" href="{{url_for('.setting_json', from=action)}}">{}</a>
+				{% else %}
+				<a class="btn-sm bg-gray-400" href="{{url_for('.setting_json', from=action, id=setting.uuid)}}">{}</a>{% endif %}
+			</label>
+			<textarea id="value" 
+				name="value"
+				rows="3"
+				class="field">{% if setting %}{{setting.value}}{% endif %}</textarea>
+			{{macro.field_error(form.value)}}
+		</div>
+	
+
+		<div class="mb-4 md:flex">
+			<div class="w-1/2 mr-2">
+				<label class="field-label" for="min_value">Min Value</label>
+				<input  class="field" type="text" name="min_value">
+			</div>
+			<div class="w-1/2">
+				<label class="field-label" for="max_value">Max Value</label>
+				<input  class="field" type="text" name="max_value" for="max_value">
+			</div>
+		</div>
+
+
+		<div class="mb-4">
+			<button class="btn btn-green">Save</button>
+		</div>
+	</form>
+
+	
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('settings',url_for('.setting_list'), 'list')}}
+{{macro.render_breadcrumb_link('Navigation', '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+
+{% block page_content %}
+<div id="app">
+<div class="flex">
+	<div class="w-1/2 px-2">
+		<form @submit.prevent="addLink">
+			<div class="mb-4">
+				<label class="field-label" for="">Label</label>
+				<input class="field" type="text" v-model="link.label">
+			</div>
+			<div class="mb-4">
+				<label class="field-label" for="">Url</label>
+				<input  class="field" type="text" v-model="link.url">
+			</div>
+
+			<button class="btn-sm btn-orange">Add Link</button>
+		</form>
+	</div>
+	<div class="w-1/2 px-2">
+		<h2 class="text-2xl font-bold">Navigation Links</h2>
+		<ul>
+			<li class="rounded border px-3 py-1 mb-2" v-for="(n, index) in navigation">
+				<div class="flex justify-between">
+					<p>${n.label}<br><span class="text-gray-500 text-xs">${n.url}</span></p> 
+				<span class="px-2 py-1" @click="deleteLink(index)">x</span>
+				</div>
+
+			</li>
+		</ul>
+	</div>
+</div>
+<div>
+	<form method="post">
+		<div class="mb-4">
+			<input class="field" type="hidden" name="navigation" :value="JSON.stringify(navigation)" readonly>
+		</div>
+		<button class="btn btn-green">Save</button>
+	</form>
+</div>
+</div>
+	
+{% endblock %}
+
+
+{% block js %}
+{{super()}}
+<script src="{{url_for('static', filename='js/vue.js')}}"></script>
+<script src="{{url_for('static', filename='js/axios.js')}}"></script>
+<script>
+	//var setting = JSON.parse({{setting.value|tojson}})
+	var setting = {% if setting.value %} JSON.parse({{setting.value|tojson}}) {% else %} [] {% endif %}  
+	var vm = new Vue({
+		el: '#app',
+		delimiters: ['${', '}'],
+		data: {
+			link: {
+				label: '',
+				url: ''
+			},
+			navigation: setting
+		},
+		methods: {
+			addLink: function() {
+				this.navigation.push(this.link)
+				this.link = {}
+			},
+			deleteLink: function(index) {
+				this.navigation.splice(index, 1)
+			}
+		},
+		created: function() {
+			//check if string or array work according
+
+			//var merged = [].concat(this.setting)
+			//this.navigation =merged
+		}
+	});
+</script>
+{% endblock %}

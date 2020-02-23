@@ -1,0 +1,48 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block options %}
+<a class="rounded-full flex bg-accent px-4 py-2 text-white items-center" href="{{url_for('.setting_main')}}">
+	{{macro.svg('cog')}} Configuration
+</a>
+{% endblock %}
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.setting_list'))}}
+{% endblock %}
+{% block page_content %}
+{% if settings.items|length > 0 %}
+<form method="post">
+	<table>
+		<thead>
+			<tr>
+			<th class="w-6"><input id="selectAll" type="checkbox"> </th>
+	
+			<th class="text-left">Key</th>
+			<th class="text-left">Value</th>
+			<th class="text-left">Last modified</th>
+			</tr>
+		</thead>
+
+		<tbody>
+			{% for s in settings.items %}
+				<tr>
+					<td>
+						<input class="check" type="checkbox" name="setting_id" value="{{s.uuid}}">
+					</td>
+					<td><a href="{{url_for('.setting_update', uuid=s.uuid)}}">{{s.name}}</a></td>
+					<td class="text-gray-500 text-sm">{{s.value|truncate(50)}}</td>
+					<td>{{s.modified}}</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="mb-4 pager">
+		<button class="btn-sm btn-red">Delete</button>
+	</div>
+</form>
+{% else %}
+	{% include 'no_records.html' %}
+{% endif %}
+
+
+{% endblock %}

@@ -1,0 +1,75 @@
+{% extends 'admin/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('pages',url_for('.page_list'), 'list')}}
+{{macro.render_breadcrumb_link(action, '')}}
+{% endblock %}
+
+
+{% block options %} 
+{% if page %}
+<div class="inline-flex">
+<span class="py-2 px-4 rounded-l-full bg-accent text-white">{{macro.svg('plus')}}</span>
+<a class="bg-accent font-bold text-white py-2 px-4" 
+   href="{{url_for('.page_image_create', uuid=page.uuid)}}">Image</a>
+<a class="rounded-r-full bg-accent font-bold text-white py-2 px-4"
+   href="{{url_for('.page_docs_create', uuid=page.uuid)}}">Document</a>
+</div>
+
+{% endif %}
+{% endblock %}
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.page_list'))}}
+{% endblock %}
+
+{% block page_content %}
+	<form  method="post" novalidate>
+		{{form.hidden_tag()}}
+		<div class="mb-4">
+			<input id="name" 
+				type="text" 
+				name="name" 
+				placeholder="Untitled Page"
+				class="field-lg"
+				value="{% if page %} {{page.name}} {% endif %}">
+			{{macro.field_error(form.name) }}
+		</div>
+		<div class="mb-4">
+			<label class="field-label" for="lead">Intro </label>
+			<input id="lead"
+			       class="field" 
+			       type="text"
+			       name="lead"
+			       placeholder="Intro text"
+			       value="{% if page %}{{page.lead}}{% endif %}">
+			
+		</div>
+		<div class="mb-4">
+			<textarea id="body" 
+				name="body"
+				rows="10"
+				class="field text-lg"
+				placeholder="## Markdown Content Here">{% if page %}{{page.body}}{% endif %}</textarea>
+			{{macro.field_error(form.body)}}
+		</div>
+	
+
+		<div class="mb-4">
+			<label for="published">
+				<input id="published" 
+				       type="checkbox" 
+				       name="published" 
+				       value="{% if page %}{{page.published}}{% endif %}">
+			</label>
+		</div>
+
+
+		<div class="mb-4">
+			<button class="btn btn-green">Save</button>
+		</div>
+	</form>
+
+	
+{% endblock %}

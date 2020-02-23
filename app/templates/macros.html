@@ -1,0 +1,319 @@
+{# form errors #}
+{% macro field_error(f) %}
+{% if f.errors %}
+                {% for e in f.errors %}
+                        <p class="text-red-500 text-xs italic mt-2">{{ e}}</p>
+                {% endfor %}
+        {% endif %}
+{% endmacro %}
+
+{# HERO #}
+{% macro render_hero(hero) %}
+
+<section id="hero">
+	<!--Hero -->
+	    <div class="w-full m-0 p-0 bg-cover py-8 " style="background-image:url('{{hero.image.url}}');">
+			<div class="container max-w-4xl mx-auto pt-10 md:pt-16 text-center break-normal">
+				<!--Title-->
+				{% if hero.heading %}
+					<p class="text-white font-extrabold text-3xl md:text-5xl">
+					{{hero.heading}}
+					</p>
+				{% endif %}
+				{% if hero.tagline %}
+				<p class="text-xl md:text-2xl text-green-200 py-4 shadow font-bold">{{hero.tagline}}</p>
+				{% endif %}
+				{% if hero.action %}
+				<a class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full my-6 py-4 px-8 shadow-lg"
+				   href="{{hero.action.url}}">{{hero.action.text}}</a>
+{% endif %}
+
+	
+			</div>
+		</div>
+
+</section>
+{% endmacro %}
+
+{# INTRO #}
+{% macro intro(i) %}
+<section id="intro">
+<div class="w-full px-4 py-16 {{i.color}} text-white">
+	<h2 class="text-yellow-300 text-3xl md:text-5xl">{{i.heading}}</h2>
+	<div class="border-b-4 border-yellow-200 w-32 mb-4"></div>
+<p>{{i.body}}</p>
+</div>
+</section>
+{% endmacro %}
+
+{#FEATURES #}
+{% macro features(features) %}
+<section id="featured" class="border-b py-12">
+	 <div class="container mx-auto flex flex-wrap items-center justify-between pb-12">
+	 	 <h2 class="w-full my-2 text-xl font-black leading-tight text-center text-gray-800 lg:mt-8">
+          Our Customers / Featured in
+		 </h2>
+		 <div class="w-full mb-4">
+			 <div class="h-1 mx-auto bg-red-500 w-64  my-0 py-0 rounded-t" ></div>
+		 </div>
+
+		 {% for f in features %}
+		 	{% if loop.index is  divisibleby 2 %}
+		<div class="flex flex-wrap flex-col-reverse sm:flex-row">	
+			<div class="w-full sm:w-1/2 p-6 mt-6">
+				<img class="object-contain" src="{{f.image}}" alt="{{f.heading}}">
+			</div>
+			<div class="w-full sm:w-1/2 p-6 mt-6">
+				<div class="align-middle">
+					<h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">{{f.heading}}</h3>
+					<p class="text-gray-600 mb-8">{{f.body|truncate(200)}}<br /><br />
+					<a class="text-orange-500 underline" href="{{f.link}}">Read more</a></p>
+				</div>
+			</div>
+
+		</div>
+	
+			{% else %}
+				<div class="flex flex-wrap">
+					<div class="w-5/6 sm:w-1/2 p-6">
+					<h3 class="text-3xl text-gray-800 font-bold leading-none mb-3">{{f.heading}}</h3>
+					<p class="text-gray-600 mb-8">{{f.body|truncate(200)}}<br /><br />
+					
+					<a class="text-orange-500 underline" href="{{f.link}}">Read more</a></p>
+					
+					</div>
+					<div class="w-full sm:w-1/2 p-6">
+						<img src="{{f.image}}" alt="{{f.heading}}" class="object-contain">
+					</div>
+				</div>
+	
+			{% endif %}
+		 {% endfor %}
+	 </div>
+</section>
+{% endmacro %}
+
+{# BREADCRUMB #}
+{% macro render_breadcrumb_link(label, endpoint, icon) %}
+{% if endpoint %}
+<a href="{{endpoint}}"
+	   class="breadcrumb-link ml-1">
+		{% if icon %}{{svg(icon)}}{% endif %} <span class="ml-1">{{label|title}}</span>
+	</a>
+{% else %}
+	<span 
+	     class="breadcrumb-disabled ml-1">
+		{% if icon %}{{svg(icon)}}{% endif %} {{label|title}}
+	</span>
+{% endif %}
+{% endmacro %}
+
+
+{# DASHBOARD #}
+{# sidebar #}
+{% macro render_dashboard_sidebar(active_page=url_for('.index')) %}
+
+{# text, url, icon #}
+{% set navigation = [
+	('Dashboard', url_for('.index'), 'dashboard'),
+	('Content', '', ''),
+	('Pages', url_for('.page_list'), 'pages'),
+	('Courses', url_for('.course_list'), 'graduation'),
+	('General', '', ''),
+	('Settings', url_for('.setting_list'), 'cog'),
+	('Users', url_for('.user_list'), 'user')
+] %}
+
+<div class="sidebar">
+	
+	<ul class="mb-4">
+	{% for text, url, icon in navigation %}
+	<li class="text-sm mb-2">
+		{% if not url %}
+			<h2 class="px-2 uppercase font-bold">{{text}}</h2>
+		{% else %}
+		<a class="flex items-center rounded px-2 py-1 text-green-700 hover:bg-green-200 hover:no-underline hover:text-black
+		   {% if url == active_page %} sidebar-link-active {% endif %}" 
+		   href="{{url}}">
+			{% if icon %}
+			<span>{{ svg(icon)}}</span>
+			{% endif %} 
+			<span class="ml-2">{{text}}</span></a>
+		{% endif %}
+	</li>
+	{% endfor %}
+	</ul>
+</div>
+{% endmacro %}
+{# /DASHBOARD #}
+
+
+{% macro render_pager() %}
+<div class="px-5 py-5 bg-white border-t flex flex-col xs:flex-row items-center xs:justify-between">
+			                  <span class="text-xs xs:text-sm text-gray-900">
+                            Showing 1 to 4 of 50 Entries
+                        </span>
+                        <div class="inline-flex mt-2 xs:mt-0">
+                            <button
+                                class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-l">
+                                Prev
+                            </button>
+                            <button
+                                class="text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-r">
+                                Next
+                            </button>
+                        </div>
+
+		</div>
+
+{% endmacro %}
+
+{% macro pagination(pagination, endpoint) %}
+<div class="flex justify-between items-center">
+	{% if pagination.pages > 1 %}
+	<ul class="pagination flex text-sm mr-3">
+		<li class="{% if not pagination.has_prev %} cursor-not-allowed {% endif %} mr-2">
+			<a class="border rounded px-3 py-2"
+				href="{% if pagination.has_prev %} {{url_for(endpoint, page=pagination.page -1)}} {% endif %}">
+			&laquo;
+			</a>
+		</li>
+		{% for p in pagination.iter_pages() %}
+		<li class="mr-2">
+			<a class="border rounded px-3 py-2 {% if p == pagination.page %} bg-accent {% endif %}"
+				href="{{url_for(endpoint, page=p, **kwargs)}}">{{p}}</a>
+		</li>
+		{% endfor %}
+		<li class="">
+			<a class="border rounded px-3 py-2 {% if not pagination.has_next %} cursor-not-allowed bg-gray-200 {% endif %}"
+				href="{% if pagination.has_next %} {{url_for(endpoint, page=pagination.page +1)}} {% endif %}">
+				&raquo;
+			</a>
+		</li>
+	</ul>
+	{% endif %}
+	<p class="text-gray-500">Page {{pagination.page}} of {{pagination.pages}}</p>
+</div>
+{% endmacro %}
+
+{# Media thumbnail #}
+{% macro render_media_list(media) %}
+{% for m in media %}
+	{{ render_media_detail(m) }}
+{% endfor %}
+{% endmacro %}
+
+{% macro render_media_detail(item) %}
+<div class="flex border shadow rounded px-2 py-1 mb-4">
+	<div class="w-32 mr-2 justify-center">
+		{% if item.media_type == 'image' %}
+			<img class="rounded" src="{{item.url}}" alt="{{item.name}}">
+		{% else %}
+			<span class="text-gray-400">{{svg('pages', 10)}}</span>
+		{% endif %}
+	</div>
+	<div class="flex-1 text-gray-500 text-sm align-middle">
+		<ul>
+			<li><span class="font-bold">Name:</span> {{item.name|title}}</li>
+			<li><span class="font-bold">Type:</span> {{item.media_type|title}}</li>
+			<li><span class="font-bold">Created:</span> {{item.created}}</li>
+			<li>	
+				<label class="flex justify-center bg-red-500 text-white rounded items-center px-2 py-1" >
+				<input class=" check" type="checkbox" name="media_id" value="{{item.uuid}}">
+						 Delete 
+				</label>
+			</li>
+		</ul>
+	</div>
+</div>
+{% endmacro %}
+{# App icons #}
+
+{% macro svg(name='', size=5) %}
+<!-- <i class="w-5"></i> -->
+{% if name %}
+<svg class="fill-current w-{{size}} h-{{size}}" viewBox="0 0 24 24">
+	{# menu #}
+	{% if name == 'menu' %}
+	<path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+	{% endif %}
+
+	{# dashboard #}
+	{% if name == 'dashboard' %}
+	<path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zM5.68 7.1A7.96 7.96 0 0 0 4.06 11H5a1 1 0 0 1 0 2h-.94a7.95 7.95 0 0 0 1.32 3.5A9.96 9.96 0 0 1 11 14.05V9a1 1 0 0 1 2 0v5.05a9.96 9.96 0 0 1 5.62 2.45 7.95 7.95 0 0 0 1.32-3.5H19a1 1 0 0 1 0-2h.94a7.96 7.96 0 0 0-1.62-3.9l-.66.66a1 1 0 1 1-1.42-1.42l.67-.66A7.96 7.96 0 0 0 13 4.06V5a1 1 0 0 1-2 0v-.94c-1.46.18-2.8.76-3.9 1.62l.66.66a1 1 0 0 1-1.42 1.42l-.66-.67zM6.71 18a7.97 7.97 0 0 0 10.58 0 7.97 7.97 0 0 0-10.58 0z"/>	
+	{% endif %}
+
+	{# pages #}
+	{% if name == 'pages' %}
+<path d="M19.398 7.415l-7.444-1.996L10.651.558c-.109-.406-.545-.642-.973-.529L.602 2.461c-.428.114-.686.538-.577.944l3.23 12.051c.109.406.544.643.971.527l3.613-.967-.492 1.838c-.109.406.149.83.577.943l8.11 2.174c.428.115.862-.121.972-.529l2.97-11.084c.108-.406-.15-.83-.578-.943zM1.633 3.631l7.83-2.096 2.898 10.818-7.83 2.096L1.633 3.631zm14.045 14.832L8.864 16.6l.536-2.002 3.901-1.047c.428-.113.688-.537.578-.943l-1.508-5.627 5.947 1.631-2.64 9.851z"/>
+	{% endif %}
+
+	{# graduation  #}
+	{% if name == 'graduation' %}
+<path d="M3.302 12.238c.464 1.879 1.054 2.701 3.022 3.562 1.969.86 2.904 1.8 3.676 1.8.771 0 1.648-.822 3.616-1.684 1.969-.861 1.443-1.123 1.907-3.002L10 15.6l-6.698-3.362zm16.209-4.902l-8.325-4.662c-.652-.365-1.72-.365-2.372 0L.488 7.336c-.652.365-.652.963 0 1.328l8.325 4.662c.652.365 1.72.365 2.372 0l5.382-3.014-5.836-1.367a3.09 3.09 0 0 1-.731.086c-1.052 0-1.904-.506-1.904-1.131 0-.627.853-1.133 1.904-1.133.816 0 1.51.307 1.78.734l6.182 2.029 1.549-.867c.651-.364.651-.962 0-1.327zm-2.544 8.834c-.065.385 1.283 1.018 1.411-.107.579-5.072-.416-6.531-.416-6.531l-1.395.781c0-.001 1.183 1.125.4 5.857z"/>	
+	{% endif %}
+
+	{# link #}
+	{% if name == 'link' %}
+<path d="M7.859 14.691l-.81.805a1.814 1.814 0 0 1-2.545 0 1.762 1.762 0 0 1 0-2.504l2.98-2.955c.617-.613 1.779-1.515 2.626-.675a.992.992 0 1 0 1.397-1.407c-1.438-1.428-3.566-1.164-5.419.675l-2.98 2.956A3.719 3.719 0 0 0 2 14.244a3.72 3.72 0 0 0 1.108 2.658 3.779 3.779 0 0 0 2.669 1.096c.967 0 1.934-.365 2.669-1.096l.811-.805a.988.988 0 0 0 .005-1.4.995.995 0 0 0-1.403-.006zm9.032-11.484c-1.547-1.534-3.709-1.617-5.139-.197l-1.009 1.002a.99.99 0 1 0 1.396 1.406l1.01-1.001c.74-.736 1.711-.431 2.346.197.336.335.522.779.522 1.252s-.186.917-.522 1.251l-3.18 3.154c-1.454 1.441-2.136.766-2.427.477a.99.99 0 1 0-1.396 1.406c.668.662 1.43.99 2.228.99.977 0 2.01-.492 2.993-1.467l3.18-3.153A3.732 3.732 0 0 0 18 5.866a3.726 3.726 0 0 0-1.109-2.659z"/>
+%
+	{% endif %}
+
+	{# cog #}
+	{% if name == 'cog' %}
+<path d="M9 4.58V4c0-1.1.9-2 2-2h2a2 2 0 0 1 2 2v.58a8 8 0 0 1 1.92 1.11l.5-.29a2 2 0 0 1 2.74.73l1 1.74a2 2 0 0 1-.73 2.73l-.5.29a8.06 8.06 0 0 1 0 2.22l.5.3a2 2 0 0 1 .73 2.72l-1 1.74a2 2 0 0 1-2.73.73l-.5-.3A8 8 0 0 1 15 19.43V20a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-.58a8 8 0 0 1-1.92-1.11l-.5.29a2 2 0 0 1-2.74-.73l-1-1.74a2 2 0 0 1 .73-2.73l.5-.29a8.06 8.06 0 0 1 0-2.22l-.5-.3a2 2 0 0 1-.73-2.72l1-1.74a2 2 0 0 1 2.73-.73l.5.3A8 8 0 0 1 9 4.57zM7.88 7.64l-.54.51-1.77-1.02-1 1.74 1.76 1.01-.17.73a6.02 6.02 0 0 0 0 2.78l.17.73-1.76 1.01 1 1.74 1.77-1.02.54.51a6 6 0 0 0 2.4 1.4l.72.2V20h2v-2.04l.71-.2a6 6 0 0 0 2.41-1.4l.54-.51 1.77 1.02 1-1.74-1.76-1.01.17-.73a6.02 6.02 0 0 0 0-2.78l-.17-.73 1.76-1.01-1-1.74-1.77 1.02-.54-.51a6 6 0 0 0-2.4-1.4l-.72-.2V4h-2v2.04l-.71.2a6 6 0 0 0-2.41 1.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/>	
+	{% endif %}
+
+	{# user #}
+	{% if name == 'user' %}
+<path  d="M12 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-2a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm9 11a1 1 0 0 1-2 0v-2a3 3 0 0 0-3-3H8a3 3 0 0 0-3 3v2a1 1 0 0 1-2 0v-2a5 5 0 0 1 5-5h8a5 5 0 0 1 5 5v2z"/>	
+	{% endif %}
+
+	{# plus #}
+	{% if name == 'plus' %}
+	<path d="M16 10c0 .553-.048 1-.601 1H11v4.399c0 .552-.447.601-1 .601-.553 0-1-.049-1-.601V11H4.601C4.049 11 4 10.553 4 10c0-.553.049-1 .601-1H9V4.601C9 4.048 9.447 4 10 4c.553 0 1 .048 1 .601V9h4.399c.553 0 .601.447.601 1z"/>
+	{% endif %}
+
+	{# info #}
+	{% if name == 'info' %}
+	<path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm0-9a1 1 0 0 1 1 1v4a1 1 0 0 1-2 0v-4a1 1 0 0 1 1-1zm0-4a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+	{% endif %}
+
+	{# arrow-left (back) #}
+	{% if name == 'arrow-left' %}
+<path d="M12.452 4.516c.446.436.481 1.043 0 1.576L8.705 10l3.747 3.908c.481.533.446 1.141 0 1.574-.445.436-1.197.408-1.615 0-.418-.406-4.502-4.695-4.502-4.695a1.095 1.095 0 0 1 0-1.576s4.084-4.287 4.502-4.695c.418-.409 1.17-.436 1.615 0z"/>		{% endif %}
+
+	{# images #}
+	{% if name == 'images' %}
+	<path d="M17.125 6.17L15.079.535c-.151-.416-.595-.637-.989-.492L.492 5.006c-.394.144-.593.597-.441 1.013l2.156 5.941V8.777c0-1.438 1.148-2.607 2.56-2.607H8.36l4.285-3.008 2.479 3.008h2.001zM19.238 8H4.767a.761.761 0 0 0-.762.777v9.42c.001.444.343.803.762.803h14.471c.42 0 .762-.359.762-.803v-9.42A.761.761 0 0 0 19.238 8zM18 17H6v-2l1.984-4.018 2.768 3.436 2.598-2.662 3.338-1.205L18 14v3z"/>
+	{% endif %}
+
+	{# image #}
+	{% if name == 'image' %}
+	<path fill-rule="evenodd" d="M19 2H1a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1zm-1 14H2V4h16v12zm-3.685-5.123l-3.231 1.605-3.77-6.101L4 14h12l-1.685-3.123zM13.25 9a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5z"/>
+	{% endif%}
+
+	{# list #}
+	{% if name == 'list' %}
+<path d="M14.4 9H8.6c-.552 0-.6.447-.6 1s.048 1 .6 1h5.8c.552 0 .6-.447.6-1s-.048-1-.6-1zm2 5H8.6c-.552 0-.6.447-.6 1s.048 1 .6 1h7.8c.552 0 .6-.447.6-1s-.048-1-.6-1zM8.6 6h7.8c.552 0 .6-.447.6-1s-.048-1-.6-1H8.6c-.552 0-.6.447-.6 1s.048 1 .6 1zM5.4 9H3.6c-.552 0-.6.447-.6 1s.048 1 .6 1h1.8c.552 0 .6-.447.6-1s-.048-1-.6-1zm0 5H3.6c-.552 0-.6.447-.6 1s.048 1 .6 1h1.8c.552 0 .6-.447.6-1s-.048-1-.6-1zm0-10H3.6c-.552 0-.6.447-.6 1s.048 1 .6 1h1.8c.552 0 .6-.447.6-1s-.048-1-.6-1z"/>
+	{% endif %}
+</svg>
+{% endif %}
+{% endmacro %}
+
+{# hero macro #}
+{% macro hero(hero) %}
+    <!-- start hero section -->
+    <section class="relative px-4 pt-32 pb-48 text-center bg-cover bg-blue-100 md:text-left"  style="background-image:url('{{hero.image_url}}');">
+      <div>
+	      <h1 class="text-3xl font-bold leading-tight">{{hero.heading}}</h1>
+        <p class="mt-4 text-2xl font-bold text-gray-700">{{hero.body}}</p>
+	<p class="mt-4 text-gray-700">{{hero.tagline}}</p>
+        <a href="/courses" title=""
+          class="inline-block px-8 py-4 mt-6 font-bold text-white bg-blue-500 rounded hover:bg-blue-600 focus:bg-blue-600">Learn More</a>
+      </div>
+
+      
+    </section>
+    <!-- end hero section -->
+{% endmacro %}

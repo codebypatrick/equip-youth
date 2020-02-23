@@ -1,0 +1,41 @@
+{% extends 'admin/layout.html' %}
+
+{% import 'macros.html' as macro %}
+
+{% block breadcrumb %}
+{{macro.render_breadcrumb_link('users',url_for('.user_list'), 'list')}}
+{{macro.render_breadcrumb_link(user.username, '')}}
+{% endblock %}
+
+
+
+{% block sidebar %} 
+{{macro.render_dashboard_sidebar(url_for('.user_list'))}}
+{% endblock %}
+{% block page_content %}
+	<form  method="post" novalidate>
+		{{form.hidden_tag()}}
+		
+		<div class="mb-4">
+			<label class="field-label" for="full_name">Full name</label>
+			<input id="full_name" type="text" name="full_name" class="field" 
+				value="{% if user %} {{user.full_name}} {% endif %}">
+			{{macro.field_error(form.full_name)}}
+		</div>
+
+		<div class="mb-4">
+			<label class="field-label" for="role">Role</label>
+			<select id="role" name="role" class="field">
+				{% for value, label, _ in form.role.iter_choices() %}
+				<option value="{{value}}" 
+					{% if value == user.role %} selected {% endif %}>{{label | title}}</option>
+				{% endfor %}
+			</select>
+		</div>
+
+
+		<div class="mb-4">
+			<button class="btn btn-green">Save</button>
+		</div>
+	</form>
+{% endblock %}

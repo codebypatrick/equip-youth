@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,600,700&display=swap">
+
+  <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+
+  <title>FairPrice</title>
+
+</head>
+
+<body class="overflow-x-hidden font-sans antialiased text-gray-900 bg-white">
+
+  <main>
+
+    <!-- start header -->
+    <header class="fixed inset-x-0 top-0 z-50 w-full px-4 py-4 bg-transparent" id="navbar">
+      <div class="flex items-center justify-between">
+        <div>
+          <a href="#" title="">
+            <svg xmlns="http://www.w3.org/2000/svg" width="188" height="39" viewBox="0 0 188 39">
+              <g transform="translate(-193 -27)"><text transform="translate(280 56)" fill="#454f5b" font-size="24"
+                  font-family="ArialRoundedMTBold, Arial Rounded MT">
+                  <tspan x="0" y="0">FairRate</tspan>
+                </text>
+                <g transform="translate(193 27)">
+                  <path d="M54,33H0L27,0,54,33ZM23,16V27h8V16H23Z" transform="translate(0 6)" fill="#4ad5f6" />
+                  <path d="M14,0,0,16H27L14,0" transform="translate(40)" fill="#95cdb1" />
+                  <path d="M14,0,0,16H27L14,0" transform="translate(55 18)" fill="#ffc48b" />
+                </g>
+              </g>
+            </svg>
+          </a>
+        </div>
+
+        <div class="block lg:hidden">
+          <button type="button" class="flex items-center justify-center leading-none navbar-toggler">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+              <path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z" />
+            </svg>
+          </button>
+        </div>
+
+        <nav class="flex items-center hidden lg:block">
+          <a href="#" class="font-semibold hover:text-gray-600">Rates</a>
+          <a href="#"
+            class="hidden block max-w-3xl mt-4 font-semibold md:ml-6 lg:inline hover:text-gray-600 md:mt-0">About
+            Us</a>
+          <a href="#" class="block mt-3 font-semibold md:ml-6 hover:text-gray-600 md:mt-0 menu_item">Resources</a>
+          <a href="#" class="block mt-3 font-semibold md:ml-6 hover:text-gray-600 md:mt-0">FAQs</a>
+          <a href="#"
+            class="block px-4 py-2 mt-3 font-semibold text-white bg-blue-500 rounded hover:bg-blue-700 md:ml-6 md:mt-0">Get
+            Started</a>
+        </nav>
+      </div>
+    </header>
+    <!-- end header -->
+
+    <!-- start hero section -->
+    <section class="relative px-4 pt-32 pb-48 text-center bg-blue-100 md:text-left">
+      <div>
+        <h1 class="text-3xl font-bold leading-tight">Fair Rate lets you find the fairrest rate</h1>
+        <p class="mt-4 text-gray-700">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut
+          fermentum massa justo sit amet
+          risus.</p>
+        <p class="mt-4 text-gray-700">There are countless services with different rates %</p>
+        <a href="#" title=""
+          class="inline-block px-8 py-4 mt-6 font-bold text-white bg-blue-500 rounded hover:bg-blue-600 focus:bg-blue-600">Find
+          the Fair Rate</a>
+      </div>
+
+      <div class="absolute bottom-0 right-0 w-full">
+        <img src="images/background.svg" alt="" class="object-cover w-full">
+      </div>
+    </section>
+    <!-- end hero section -->
+
+    <!-- start how it works -->
+    <section class="px-4 py-16 text-center bg-gray-100">
+      <h2 class="text-2xl font-bold leading-tight lg:text-3xl">How FairRate works you ask?</h2>
+
+      <div class="mt-8 md:flex">
+        <div class="w-full px-4 py-8 bg-white rounded-lg shadow-lg sm:w-1/3 sm:mx-2 lg:mx-6">
+          <div class="h-24">
+            <img src="images/icon-home-1.svg" alt="" class="mx-auto">
+          </div>
+          <h4 class="mt-10 text-lg font-bold tracking-wide uppercase">Apply with your home</h4>
+          <p class="mt-2 text-base text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+
+        <div class="w-full px-4 py-8 mt-4 bg-white rounded-lg shadow-lg sm:mt-0 sm:w-1/3 sm:mx-2 lg:mx-6">
+          <div class="h-24">
+            <img src="images/icon-home-2.svg" alt="" class="mx-auto">
+          </div>
+          <h4 class="mt-10 text-lg font-bold tracking-wide uppercase">Complete the form</h4>
+          <p class="mt-2 text-base text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+
+        <div class="w-full px-4 py-8 mt-4 bg-white rounded-lg shadow-lg sm:mt-0 sm:w-1/3 sm:mx-2 lg:mx-6">
+          <div class="h-24">
+            <img src="images/icon-home-3.svg" alt="" class="mx-auto">
+          </div>
+          <h4 class="mt-10 text-lg font-bold tracking-wide uppercase">Choose the fair rate</h4>
+          <p class="mt-2 text-base text-gray-700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </div>
+      </div>
+    </section>
+    <!-- end how it works -->
+
+    <!-- start testimonials -->
+    <section class="px-4 pb-16 text-center bg-gray-100">
+      <div class="w-full sm:max-w-2xl sm:mx-auto">
+        <p class="text-lg font-bold text-md lg:text-xl">“FairRate is beautiful, elegant and easy to apply.
+          I’ve
+          been able to
+          apply for an amazing rate in just a minutes. Thank you very much for creating this impressive service!”</p>
+        <p class="mt-4 text-xl font-bold text-blue-500">Valeria Boltneva</p>
+        <p class="text-gray-600">Director of Adrian Stefan.Inc</p>
+      </div>
+    </section>
+    <!-- end testimonials -->
+
+    <!-- start features -->
+    <section class="flex flex-col px-4 py-12 text-center bg-blue-500 lg:px-16 md:px-8 xl:px-24 xxl:px-40">
+      <div>
+        <h2 class="text-2xl font-bold leading-tight text-white lg:text-3xl">Looking for the perfect rate for your home?
+        </h2>
+      </div>
+
+      <div class="items-center sm:flex">
+        <div class="w-full mt-8 sm:w-1/2 sm:pr-12">
+          <img src="images/rates.png" alt="" class="mx-auto">
+        </div>
+
+        <div class="mt-8 sm:w-1/2 sm:text-left">
+          <h4 class="text-xl font-bold text-white">Stop Looking</h4>
+          <p class="mt-2 text-base text-white">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+            ut
+            fermentum massa justo sit amet
+            risus. Praesent commodo cursus magna.</p>
+
+          <ul class="mt-8 text-left">
+            <li>
+              <div class="flex items-start">
+                <div class="w-6 h-6 mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                      d="M12,24A12,12,0,0,1,3.515,3.515,12,12,0,0,1,20.486,20.486,11.922,11.922,0,0,1,12,24ZM12,1A11,11,0,1,0,23,12,11.014,11.014,0,0,0,12,1ZM9.646,16.506a.8.8,0,0,1-.514-.26L5.9,13.016l1.027-1.027,2.723,2.722,7.2-7.252L17.868,8.5l-7.714,7.754A.8.8,0,0,1,9.646,16.506Z"
+                      fill="#fff" /></svg>
+                </div>
+                <div>
+                  <p class="text-white">Integer posuere erat a ante venenatis dapibus</p>
+                </div>
+              </div>
+            </li>
+            <li class="mt-3">
+              <div class="flex items-start">
+                <div class="w-6 h-6 mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                      d="M12,24A12,12,0,0,1,3.515,3.515,12,12,0,0,1,20.486,20.486,11.922,11.922,0,0,1,12,24ZM12,1A11,11,0,1,0,23,12,11.014,11.014,0,0,0,12,1ZM9.646,16.506a.8.8,0,0,1-.514-.26L5.9,13.016l1.027-1.027,2.723,2.722,7.2-7.252L17.868,8.5l-7.714,7.754A.8.8,0,0,1,9.646,16.506Z"
+                      fill="#fff" /></svg>
+                </div>
+                <div>
+                  <p class="text-white">Integer posuere erat a ante venenatis dapibus</p>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <a href="#"
+            class="block px-6 py-4 mt-8 font-bold text-center text-blue-500 bg-white rounded sm:inline-block">Find
+            the
+            Fair
+            Rate</a>
+        </div>
+      </div>
+    </section>
+    <!-- end features -->
+
+    <!-- start cta -->
+    <section class="px-4 py-12 text-center bg-white lg:px-16 md:px-8 xl:px-24 xxl:px-40">
+      <div>
+        <h2 class="text-2xl font-bold lg:text-3xl ">Need Help?</h2>
+        <p class="w-full mx-auto mt-6 text-base text-gray-700 lg:w-1/2">Contact our Customer Support that is always
+          ready
+          to help you with any
+          possible
+          questions, problems or information.</p>
+        <a href="#" class="block mt-4 text-xl font-semibold text-blue-500">support@fairrate.com</a>
+      </div>
+    </section>
+    <!-- end cta -->
+
+    <!-- start footer -->
+    <footer class="flex flex-col px-4 py-12 text-center bg-gray-200 sm:text-left lg:px-16 md:px-8 xl:px-24 xxl:px-40">
+      <div class="flex-wrap sm:flex">
+        <div class="sm:w-1/2 lg:w-1/5">
+          <h6 class="text-sm font-bold text-gray-600 uppercase">Contact</h6>
+
+          <div class="mt-4">
+            <a href="#" class="block text-gray-900 text-md">hello@fairrate.com</a>
+            <a href="#" class="block mt-2 text-gray-900 text-md">+62 202 555 0117</a>
+          </div>
+        </div>
+
+        <div class="mt-8 sm:w-1/2 sm:mt-0 lg:w-1/5 lg:mt-0">
+          <h6 class="text-sm font-bold text-gray-600 uppercase">Company</h6>
+          <ul class="mt-4">
+            <li><a href="#">Resources</a></li>
+            <li class="mt-2"><a href="#">Careers</a></li>
+          </ul>
+        </div>
+
+        <div class="mt-8 sm:w-1/2 sm:mt-12 lg:w-1/5 lg:mt-0">
+          <h6 class="text-sm font-bold text-gray-600 uppercase">Legal</h6>
+          <ul class="mt-4">
+            <li><a href="#">NMLS Consumer Access</a></li>
+            <li class="mt-2"><a href="#">Privacy Policy</a></li>
+            <li class="mt-2"><a href="#">Terms of Use</a></li>
+            <li class="mt-2"><a href="#">Disclosures & Licensing</a></li>
+          </ul>
+        </div>
+
+        <div class="mt-12 sm:w-1/2 lg:w-2/5 lg:mt-0 lg:pl-12">
+          <div><svg xmlns="http://www.w3.org/2000/svg" width="188" height="39" viewBox="0 0 188 39"
+              class="mx-auto sm:mx-0">
+              <g transform="translate(-193 -27)"><text transform="translate(280 56)" fill="#454f5b" font-size="24"
+                  font-family="ArialRoundedMTBold, Arial Rounded MT">
+                  <tspan x="0" y="0">FairRate</tspan>
+                </text>
+                <g transform="translate(193 27)">
+                  <path d="M54,33H0L27,0,54,33ZM23,16V27h8V16H23Z" transform="translate(0 6)" fill="#4ad5f6" />
+                  <path d="M14,0,0,16H27L14,0" transform="translate(40)" fill="#95cdb1" />
+                  <path d="M14,0,0,16H27L14,0" transform="translate(55 18)" fill="#ffc48b" />
+                </g>
+              </g>
+            </svg></div>
+
+          <p class="mt-4 text-base text-gray-600">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
+            nibh,
+            ut
+            fermentum massa justo sit amet risus. Praesent commodo cursus magna.</p>
+        </div>
+      </div>
+
+      <div class="mt-12">
+        <p class="text-sm text-gray-600">© <span id="year"></span> Abstract UI. All Rights Reserved.</p>
+      </div>
+    </footer>
+    <!-- end footer -->
+
+  </main>
+
+
+
+  <script>
+    document.getElementById("year").innerHTML = new Date().getFullYear();
+  </script>
+
+  <script>
+    $('.navbar-toggler').click(function () {
+      $(this).toggleClass('active');
+      $('.navigation-menu').toggleClass('hidden');
+      $('#navbar').addClass('bg-white');
+    });
+
+    $(function () {
+      var navigation = $("#navbar");
+
+      $(window).scroll(function () {
+        var scroll = $(window).scrollTop();
+        if (scroll >= 10) {
+          navigation.addClass("bg-white xl:py-4 shadow-md");
+          navigation.removeClass("xl:py-8");
+        } else {
+          navigation.removeClass("bg-white xl:py-4 shadow-md");
+          navigation.addClass("xl:py-8");
+        }
+      });
+    });
+  </script>
+
+</body>
+
+</html>

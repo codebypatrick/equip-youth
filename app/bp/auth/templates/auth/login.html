@@ -1,0 +1,36 @@
+{% extends 'auth/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{%block title %} Login {% endblock %}
+
+{% block heading %} Welcome Back {% endblock %}
+
+{% block links %}
+<a href="{{url_for('.register')}}" class="text-xs">Don't have account?</a>
+<a href="{{url_for('.reset_password')}}" class="text-xs">Forgot Password?</a>
+{% endblock %}
+
+
+{% block page_content %}
+<form class="form-horizontal w-3/4 mx-auto" method="post">
+	{{form.hidden_tag()}}
+<div class="md-4">
+	<label class="field-label" for="email_username">Email or Username</label>
+	<input id="email_username" type="text" name="email_username" class="field">
+	{{macro.field_error(form.email_username)}}
+</div>
+<div class="mb-4">
+	<label class="field-label" for="password">Password</label>
+	<input class="field" id="password" type="password" name="password">
+	{{macro.field_error(form.password)}}
+</div>
+<div class="mb-4">
+	<label for="remember_me" class="field-label">
+		<input id="remember_me" type="checkbox" name="remember_me"> Remember Me
+	</label>
+</div>
+<div class="flex flex-col mt-8">
+	<button class="btn btn-green">Login</button>
+</div>
+</form>
+{% endblock %}
