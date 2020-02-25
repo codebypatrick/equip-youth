@@ -7,6 +7,114 @@
         {% endif %}
 {% endmacro %}
 
+{# FORM #}
+{% macro field_description_errors(f) %}
+        {% if f.errors %}
+                {% for e in f.errors %}
+                        <p class="text-red-500 text-sm italic">{{ e }}</p>
+                {% endfor %}
+        {% endif %}
+
+        {% if f.description %}
+                <p class="text-sm text-gray-500">{{ f.description }}</p>
+        {% endif %}
+{% endmacro %}
+
+{% macro render_input_field(f) %}
+{% set class_ = kwargs.pop('class_', '') %}
+<div class="mb-4">
+        {% if f.type != 'HiddenField' or f.type != 'CSRFTokenField' %}
+                <label class="field-label" for="{{ f.id}}">{{ f.label.text }}</label>
+        {% endif %}
+        {{ f(class_='field', **kwargs) }}
+        {{ field_description_errors(f) }}
+</div>
+{% endmacro %}
+
+{% macro render_checkbox_field(f) %}
+<div class="mb-4 items-center">
+        <label class="text-gray-700 text-xs uppercase font-bold" for="{{ f.id }}">
+                {{ f() }} {{ f.label.text }}
+        </label>
+</div>
+{% endmacro %}
+
+{% macro render_textarea_field(f, rows=3) %}
+<div class="mb-4">
+        <label class="field-label" for="{{f.id}}">{{ f.label.text }}</label>
+        {{ f(class_='field',rows=rows, **kwargs) }}
+        {{ field_description_errors(f) }}
+</div>
+{% endmacro %}
+
+
+{% macro render_multicheckbox_field(f) %}
+<div class="mb-4">
+        <label class="field-label" for="{{f.id }}">{{ f.label.text }}</label>
+        {{ f() }}
+</div>
+{% endmacro %}
+
+{% macro render_select_field(f) %}
+<div class="mb-4">
+ <label class="field-label" for="{{f.id}}">{{f.label.text}}</label>
+ {{f(class='field')}}
+ {{ field_description_errors(f) }}
+</div>
+{% endmacro %}
+
+{% macro render_file_field(f) %}
+<div class="mb-4">
+        <label class="field-label" for="{{ f.id }}">
+                {{ f.label.text }}
+		{{ f(class_='') }}
+        </label>
+                {{ field_description_errors(f)}}
+</div>
+{% endmacro %}
+
+{% macro quick_form(form, action="", method="post", enctype=None, button_text="Save", textarea_rows=3) %}
+        <form
+             {% if action %} action="{{ action }}" {% endif %}
+             {% if method %} method="{{ method }}" {% endif %}
+             {% if enctype %} enctype="{{ enctype }}" {% endif %}
+             novalidate
+             role="form"
+             class="mb-4">
+                {{ form.hidden_tag()}}
+                {% for f in form %}
+                        {% if f.type in ('StringField', 'PasswordField', 'TextField') %}
+                                {{ render_input_field(f) }}
+                        {% elif f.type == 'BooleanField' %}
+                                {{ render_checkbox_field(f) }}
+                        {% elif f.type == 'TextAreaField' %}
+                                {{ render_textarea_field(f,textarea_rows ) }}
+                        {% elif f.type == 'SelectField' %}
+                                {{ render_select_field(f) }}
+                        {% elif f.type == 'MultiCheckboxField' %}
+                                {{ render_multicheckbox_field(f) }}
+                        {% elif f.type == 'FileField' %}
+                                {{ render_file_field(f) }}
+                        {% else %}
+                                {{ f() }}
+                        {% endif %}
+                {% endfor %}
+
+                <div class="md:flex md:items-center">
+                    <div class="md:w-1/3"></div>
+                    <div class="md:w-2/3">
+                      <button class="btn btn-green" type="submit">
+                              {% if button_text %}
+                                {{button_text}}
+                              {% else %}
+                                Save
+                              {% endif%}
+                      </button>
+            </div>
+          </div>
+        </form>
+{% endmacro %}
+{# /FORM #}
 {# HERO #}
 {% macro render_hero(hero) %}
 

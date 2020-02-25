@@ -10,7 +10,7 @@ from ...models import User
 class RegisterForm(Form):
     email = StringField('Email Address', validators=[DataRequired(), Email()])
     username = StringField('Username', validators=[DataRequired()])
-    full_name = StringField('Full Name', validators=[DataRequired()])
+    #full_name = StringField('Full Name', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('password2', message='Passwords must match')])
     password2 = PasswordField('Repeat Password', validators=[DataRequired()])
 
@@ -24,7 +24,7 @@ class RegisterForm(Form):
 
 
 class LoginForm(Form):
-    email_username = StringField('Email Address or Username', validators=[DataRequired()])
+    email = StringField('Email Address', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Keep me logged in')
 

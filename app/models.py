@@ -1,14 +1,17 @@
 # 3rd party imports
+from flask import current_app as app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from slugify import slugify
 from markdown import markdown
 import bleach
 import uuid
+import datetime
 
 # local imports
 from .extensions import db, login_manager
-#from .utils import unique_id
+
 
 allowed_tags = ['a', 'b', 'blockqoute', 'i','br', 'ul', 'li', 'ol', 'h1', 'h2','h3', 'p', 'strong', 'em']
 
@@ -43,6 +46,8 @@ class User(Base, UserMixin):
     last_seen = db.Column(db.DateTime, default=db.func.current_timestamp())
     password = db.Column(db.String)
     confirmed=db.Column(db.Boolean, default=False)
+    confirmed_on = db.Column(db.DateTime)
+    img_profile = db.Column(db.String)
     role = db.Column(db.Integer, default= ROLES['user'])
     pages = db.relationship('Page', backref='author', lazy='dynamic')
     courses = db.relationship('Course', backref='creator', lazy='dynamic')
@@ -60,7 +65,7 @@ class User(Base, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-
+   
     def is_admin(self):
         return self.role == ROLES['admin']
 

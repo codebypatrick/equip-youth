@@ -2,9 +2,9 @@
 from flask import render_template, redirect, url_for, flash, request
 from flask import current_app as app
 from flask_login import login_required, login_user, logout_user, current_user
-from sqlalchemy import or_
 from itsdangerous import URLSafeTimedSerializer
 from flask_mail import Message
+import datetime 
 
 # local imports
 from . import auth 
@@ -25,7 +25,7 @@ def send_confirmation(user_email):
             _external=True)
     html = render_template('auth/confirm.html', confirm_url=confirm_url)
 
-    send_mail(user_email,'Confirm email', html)
+    send_mail(user_email,'Equip Youth Africa. Please confirm your email', html)
 
 #send password reset
 def send_password_reset(user_email):
@@ -46,17 +46,13 @@ def register():
 
     if form.validate_on_submit():
         user = User(email=form.email.data,
-                    password=form.password.data,
                     username=form.username.data,
-                    full_name=form.full_name.data,
-                    )
-        #send confirm
-        send_confirmation(form.email.data)
+                    password=form.password.data)
         db.session.add(user)
         db.session.commit()
-        #login_user(user)
-        flash('Account created, Login to access', 'success')
-        return redirect(url_for('.unconfirmed'))
+        send_confirmation(form.email.data)
+        flash('A confirmation link has been sent to your email address', 'success')
+        return redirect(url_for('main.index'))
 
     return render_template('auth/register.html', form=form)
 
@@ -64,7 +60,7 @@ def register():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter(or_(User.email==form.email_username.data, User.username==form.email_username.data)).first()
+        user = User.query.filter_by(email=form.email.data).first()
         
         if user is not None and user.check_password(form.password.data):
             login_user(user, form.remember_me.data)
@@ -72,7 +68,7 @@ def login():
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Invaild Credienials or Password', 'danger')
 
-    form.email_username.data = ''
+    form.email.data = ''
     form.password.data= ''
 
 
@@ -99,7 +95,8 @@ def confirm_email(token):
         flash('Account already confirmed')
     else:
         user.confirmed = True
-        db.session.add(user)
+        user.confirmed_on = datetime.datetime.now()
+        #db.session.add(user)
         db.session.commit()
         flash('Account confirmed', 'success')
         
