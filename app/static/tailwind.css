@@ -27,7 +27,7 @@ table {
 	@apply .min-w-full .mb-5
 }
 th {
-	@apply .px-4 .py-3 .border-b .border-gray-200 .text-xs .font-semibold .text-gray-600 .uppercase .tracking-wider
+	@apply .px-4 .py-3 .border-b-2 .bg-gray-100 .border-gray-200 .text-xs .font-semibold .text-gray-600 .uppercase .tracking-wider
 }
 td {
 	@apply .px-4 .py-3 .border-b .border-gray-200 .bg-white .text-sm
@@ -109,4 +109,24 @@ td {
 /* dashboard sidebar */
 .sidebar-link-active {
 	@apply .text-white .bg-accent
+}
+
+.markdown {
+	@apply .leading-loose
+}
+
+.markdown p {
+	@apply .leading-loose .mb-4
+}
+
+.markdown ul {
+	@apply .list-disc .list-inside .mb-4
+}
+
+.markdown li {
+	@apply .px-4
+}
+
+.markdown h2 {
+	@apply .text-2xl .font-medium .mb-4
 }

@@ -1,0 +1,37 @@
+{% extends 'main/layout.html' %}
+{% import 'macros.html' as macro %}
+{% block title %} Courses{% endblock %}
+
+{% block page_content %}
+<!-- new -->
+<section id="courses">
+<div class="bg-white">
+	<div class="container mx-auto bg-white px-4 py-8">
+		<h2 class="text-4xl font-medium py-4 leading-loose">Gallery</h2>
+		<div class="bg-gray-100">
+		<div class="container w-full max-w-6xl mx-auto px-2 py-8">
+			<div class="flex flex-wrap -mx-2">
+		
+		{% for m in media.items %}
+	<div class="w-full md:w-1/2 px-2 pb-12">
+					<div class="h-full bg-white rounded overflow-hidden shadow-md hover:shadow-lg relative smooth">
+						<a href="#" class="no-underline hover:no-underline">
+							{% if m.filename %}
+							<img src="{{m.imgsrc}}" class="object-contain w-full rounded-t shadow-lg">{% endif %}
+								<div class="p-6 h-auto">
+									<div class="font-bold  text-gray-900">{{m.name}}</div>
+								</div>
+							
+						</a>
+					</div>
+				</div>
+
+		{% endfor %}
+			</div>
+		</div>
+		</div>
+	</div>
+</div>
+</section>
+<!-- end -->
+{% endblock %}

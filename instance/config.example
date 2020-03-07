@@ -1,0 +1,4 @@
+#Mail settings
+MAIL_USERNAME = 'example@mail.com' 
+MAIL_PASSWORD = 'password'
+MAIL_DEFAULT_SENDER = 'example@mail.com' 

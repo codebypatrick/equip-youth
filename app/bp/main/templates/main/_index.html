@@ -4,80 +4,106 @@
 {% block page_content %}
 
 {% for h in hero.items %} {{macro.hero(h)}} {% endfor %}
+{% if videos %}
+	<section id="videos">
+	<div class="bg-green-100">
+		<div class="container w-full max-w-6xl mx-auto px-2 py-8">
+			<div class="flex flex-wrap -mx-2">
+		{% for v in videos %}
+				<div class="w-full md:w-1/2 px-4 py-2 items-center">
+					<div class="h-full bg-white rounded overflow-hidden shadow-md hover:shadow-lg relative smooth">
+			<iframe width="420" height="315"
+							    src="https://www.youtube.com/embed/{{v.youtube_id}}">
+</iframe>
+	
+					</div>
+				</div>
+				{% endfor %}
 
+			</div>
+		</div>
+		
+	</div>
+	</section>
+{% endif %}
     <!-- start about -->
     <section class="relative px-4 py-16 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 lg:py-32">
       <div class="flex flex-col lg:flex-row lg:-mx-8">
         <div class="w-full lg:w-1/2 lg:px-8">
 		<h2 class="text-3xl leading-tight font-bold mt-4">Welcome to {{g.app_name}}</h2>
-          <p class="text-lg mt-4 font-semibold">Excellence in Dentistry in the Heart of NY</p>
-          <p class="mt-2 leading-relaxed">Donec convallis sollicitudin facilisis. Integer nisl ligula, accumsan non
-            tincidunt ac, imperdiet in enim.
-            Donec efficitur ullamcorper metus, eu venenatis nunc. Nam eget neque tempus, mollis sem a, faucibus mi.</p>
+          <p class="text-2xl mt-4 font-semibold italic text-gray-500 text-sm">Creating a Skilled Generation</p>
+          <p class="mt-2 leading-relaxed text-xl">We provide Vocational Training Services,  partner with individuals, communities, schools and businesses to deliver specialist qualifications and short courses to empower youth and equip them with industry relevant skills.</p>
         </div>
 
         <div class="w-full lg:w-1/2 lg:px-8 mt-12 lg:mt-0">
           <div class="md:flex">
-            <div>
-              <div class="w-16 h-16 bg-blue-600 rounded-full"></div>
-            </div>
             <div class="md:ml-8 mt-4 md:mt-0">
-              <h4 class="text-xl font-bold leading-tight">Everything You Need Under One Roof</h4>
-              <p class="mt-2 leading-relaxed">Our comprehensive services allow you to receive all needed dental care
-                right here in our state-of-art
-                office – from dental cleanings and fillings to dental implants and extractions.</p>
+              <h4 class="text-2xl font-bold leading-tight">Everything You Need Under One Roof</h4>
+              <p class="mt-2 leading-relaxed text-xl">Our comprehensive services allow you to receive all needed 
+                training right here in our state-of-art facilities – from hands-on training, management and mentorship</p>
             </div>
           </div>
 
           <div class="md:flex mt-8">
-            <div>
-              <div class="w-16 h-16 bg-blue-600 rounded-full"></div>
-            </div>
+
             <div class="md:ml-8 mt-4 md:mt-0">
-              <h4 class="text-xl font-bold leading-tight">Our Student-Focused Approach</h4>
-              <p class="mt-2 leading-relaxed">Your treatment plan will perfectly match your needs, lifestyle, and goals.
-                Even if it’s been years
-                since you last visited the dentist, we can help. Our comfortable office, compassionate team, and
-                minimally-invasive treatments will help you feel completely at ease.</p>
+              <h4 class="text-2xl font-bold leading-tight">Our Student-Focused Approach</h4>
+              <p class="mt-2 leading-relaxed text-xl">Our study plan will perfectly match your needs, lifestyle, and goals.
+                Even if it’s been years since you last did training of any kind, we can help. Our comfortable facilities, compassionate team, and fully equipted centre will help you feel completely at ease.</p>
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="md:flex md:flex-wrap mt-24 text-center md:-mx-4">
-	      {% for c in courses %}
-        <div class="md:w-1/2 md:px-4 lg:w-1/4 p-4">
-          <div class="bg-white rounded-lg border border-gray-300 p-8">
-		  {% for m in c.media %}
-		  <img src="{{m.url}}" alt="" class="h-32 mx-auto">
-	    {% endfor %}
-
-	    <h4 class="text-xl font-bold mt-4">{{c.name}}</h4>
-	    <p class="mt-1">{{c.description|truncate(30)}}</p>
-	    <a href="{{url_for('.course', slug=c.slug)}}" class="block mt-4 btn btn-orange">Read More</a>
-          </div>
-        </div>
-	{% endfor %}
       </div>
     </section>
     <!-- end about -->
 
+    <!-- courses -->
+    <section id="courses">
+	<div class="bg-gray-100">
+		<div class="container w-full max-w-6xl mx-auto px-2 py-8">
+			<div class="flex flex-wrap -mx-2">
+		{% for c in courses %}
+				<div class="w-full md:w-1/3 px-2 pb-12">
+					<div class="h-full bg-white rounded overflow-hidden shadow-md hover:shadow-lg relative smooth">
+						<a href="{{url_for('.course', slug=c.slug)}}" class="no-underline hover:no-underline">
+							{% if c.image %}
+							<img src="{{c.imgsrc}}" class="h-48 w-full rounded-t shadow-lg">{% endif %}
+								<div class="p-6 h-auto">
+									<div class="font-bold  text-gray-900">{{c.title}}</div>
+									<p class="text-gray-800 text-base mb-3">
+									{{c.body_html|safe|truncate(100)}}
+									</p>
+								</div>
+							
+						</a>
+					</div>
+				</div>
+				{% endfor %}
+
+			</div>
+		</div>
+		
+	</div>
+    </section>
+    <!-- end courses -->
+
     <!-- start testimonials -->
-    <section class="relative bg-gray-100 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-16 lg:py-32">
+    <section class="relative bg-orange-500 px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-16 lg:py-32">
       <div class="flex flex-col lg:flex-row lg:-mx-8">
         <div class="w-full lg:w-1/2 lg:px-8">
-		<h2 class="text-3xl leading-tight font-bold mt-4">Why choose {{g.app_name}}?</h2>
-          <p class="mt-2 leading-relaxed">Aenean ut tellus tellus. Suspendisse potenti. Nullam tincidunt lacus tellus,
-            sed aliquam est vehicula a. Pellentesque consectetur condimentum nulla, eleifend condimentum purus vehicula
-            in. Donec convallis sollicitudin facilisis. Integer nisl ligula, accumsan non tincidunt ac, imperdiet in
-            enim. Donec efficitur ullamcorper metus, eu venenatis nunc. Nam eget neque tempus, mollis sem a, faucibus
-            mi.</p>
+		<h2 class="text-3xl leading-tight font-bold py-4 text-white">Why choose {{g.app_name}}?</h2>
+          <p class="leading-relaxed text-white font-thin text-xl">
+
+85% of the jobs on the market are Technical, 15% are Corporate jobs. Inspite of this fact, 90% of parents pay for their children to pursue Corporate jobs.  It is our job to get you into that 85%.
+	
+	  We offer training for specific industry relevant jobs. Since vocational training often begins after secondary school, students who successfully complete the courses are  prepared to take a high-paying, skilled job immediately. Graduates from Equip Youth Africa have an advantage over informally trained job-seekers because of the certification from Directorate of Industral training, the skills needed to successfully perform a specific job,  and training from  skilled hands on instructors.
+  </p>
         </div>
 
         <div class="w-full md:max-w-md md:mx-auto lg:w-1/2 lg:px-8 mt-12 mt:md-0">
-          <div class="bg-gray-400 w-full h-72 rounded-lg"></div>
+          <div class="w-full h-72 rounded-lg"></div>
 
-          <p class="italic text-sm mt-2 text-center">Aenean ante nisi, gravida non mattis semper.</p>
+          <p class="italic font-fold text-lg text-yellow-200 mt-2 text-center">Equip Youth Africa Team</p>
         </div>
       </div>
     </section>
@@ -87,60 +113,41 @@
     <section class="relative bg-white px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-32">
       <div class="">
         <h2 class="text-3xl leading-tight font-bold">Blog</h2>
-        <p class="text-gray-600 mt-2 md:max-w-lg">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac
-          turpis egestas.</p>
-
-        <a href="#" title="" class="inline-block text-teal-500 font-semibold mt-6 mt:md-0">View All Posts</a>
+	<a href="{{url_for('.posts')}}" title="" class="inline-block text-teal-500 font-semibold mt-6 mt:md-0">View All Posts</a>
       </div>
 
       <div class="md:flex mt-12 md:-mx-4">
+	      {% for p in posts %}
         <div class="md:px-4 md:w-1/2 xl:w-1/4">
           <div class="bg-white rounded border border-gray-300">
+		  {% if p.image %}
             <div class="w-full h-48 overflow-hidden bg-gray-300">
-		    <img src="static/hvac.jpeg" alt="">
+		    <img src="{{p.imgsrc}}" alt="{{p.title}}">
 	    </div>
+	    {% endif %}
             <div class="p-4">
               <div class="flex items-center text-sm">
-                <span class="text-teal-500 font-semibold">Air Conditioning</span>
-                <span class="ml-4 text-gray-600">29 Jan, 2020</span>
+                <span class="text-teal-500 font-semibold">
+			{% for i in p.tags%} {{i.name}} {% endfor %}
+		</span>
+		<span class="ml-4 text-gray-600">{{p.modified|pretty_date}}</span>
               </div>
-              <p class="text-lg font-semibold leading-tight mt-4">Some new AC post</p>
-              <p class="text-gray-600 mt-1">This card has supporting text below as a natural lead-in to additional content.
+	      <p class="text-lg font-semibold leading-tight mt-4">
+	      <a href="{{url_for('.post', slug=p.slug)}}">{{p.title}}</a></p>
+	      <p class="text-gray-600 mt-1">{{p.body|safe|truncate(100)}}
               </p>
               <div class="flex items-center mt-4">
                 <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-300"></div>
                 <div class="ml-4">
-                  <p class="text-gray-600">By <span class="text-gray-900 font-semibold">Abby Sims</span></p>
+                  <p class="text-gray-600">By <span class="text-gray-900 font-semibold">Equip Youth Africa Team</span></p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div class="md:px-4 md:w-1/2 xl:w-1/4 mt-4 md:mt-0">
-          <div class="bg-white rounded border border-gray-300 ">
-            <div class="w-full h-48 overflow-hidden bg-gray-300">
-		<img src="static/blacktailor.jpeg" alt="">
-	    </div>
-            <div class="p-4">
-              <div class="flex items-center text-sm">
-                <span class="text-teal-500 font-semibold">Tailoring</span>
-                <span class="ml-4 text-gray-600">29 Nov, 2019</span>
-              </div>
-              <p class="text-lg font-semibold leading-tight mt-4">Student starts fashion house</p>
-              <p class="text-gray-600 mt-1">This card has supporting text below as a natural lead-in to additional
-                content.
-              </p>
-              <div class="flex items-center mt-4">
-                <div class="w-8 h-8 rounded-full overflow-hidden bg-gray-300"></div>
-                <div class="ml-4">
-                  <p class="text-gray-600">By <span class="text-gray-900 font-semibold">Abby Sims</span></p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+	{% endfor %}
+        
+ </div>
     </section>
     <!-- end blog -->
 
@@ -148,9 +155,8 @@
     <section
       class="relative bg-blue-teal-gradient px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-12 text-center md:text-left">
       <div class="md:flex md:items-center md:justify-center">
-        <h2 class="text-xl font-bold text-white">Get in touch with us today! <br class="block md:hidden">Call us on: +256
-          0774-789-1935</h2>
-        <a href="#"
+        <h2 class="text-xl font-bold text-white">Get in touch with us today! <br class="block md:hidden">Call us on: +256 0705 999 864</h2>
+        <a href="/apply"
           class="px-8 py-4 bg-white text-blue-600 rounded inline-block font-semibold md:ml-8 mt-4 md:mt-0">Apply Now</a>
       </div>
     </section>

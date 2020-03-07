@@ -10,19 +10,16 @@ class Config(object):
     
     UPLOADED_IMAGES_DEST =  BASE_DIR + '/app/static/img/'
     UPLOADED_DOCUMENTS_DEST = BASE_DIR + '/app/static/docs'
+    UPLOADS_DEFAULT_DEST = BASE_DIR + '/app/static'
 
     # mail settings
     MAIL_SERVER = 'smtp.googlemail.com'
     MAIL_PORT = 465
     MAIL_USE_TLS = False
     MAIL_USE_SSL = True
-
-    #MAIL_USERNAME = os.environ['APP_MAIL_USERNAME'] 
-    #MAIL_PASSWORD = os.environ['APP_MAIL_PASSWORD']
-
-
-    #MAIL_DEFAULT_SENDER = os.environ['APP_MAIL_SENDER'] 
-
+    #MSEARCH_BACKEND = "whoosh"
+    # auto create or update index
+    #MSEARCH_ENABLE = True
 
     @staticmethod
     def init_app(app):

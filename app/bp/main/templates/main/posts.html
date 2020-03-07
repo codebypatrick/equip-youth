@@ -1,17 +1,17 @@
 {% extends 'main/layout.html' %}
 {% import 'macros.html' as macro %}
-{% block title %} Courses{% endblock %}
+{% block title %} Blog{% endblock %}
 
 {% block page_content %}
 <!-- new -->
 <section id="courses">
 <div class="bg-white">
 	<div class="container mx-auto bg-white px-4 py-8">
-		<h2 class="text-4xl font-medium py-4 leading-loose">Courses</h2>
-		{% for c in courses %}
+		<h2 class="text-4xl font-medium py-4 leading-loose">Blog</h2>
+		{% for c in posts %}
 		<div class="py-4 leading-loose">
 			<h2 class="text-2xl font-medium">
-				<a href="{{url_for('.course', slug=c.slug)}}">
+				<a href="{{url_for('.post', slug=c.slug)}}">
 					{{c.title}}
 				</a>
 			</h2>
@@ -30,7 +30,7 @@
 				{% endif %}
 				
 			</div>
-			<a href="{{url_for('.course', slug=c.slug)}}" class="text-lg">Read more</a>
+			<a href="{{url_for('.post', slug=c.slug)}}" class="text-lg">Read more</a>
 				</div>
 			</div>
 		</div>

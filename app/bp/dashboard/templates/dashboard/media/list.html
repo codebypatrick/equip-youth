@@ -1,0 +1,51 @@
+{% extends 'dashboard/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block title %} Videos {% endblock %}
+
+{% block page_content %}
+  <div class="bg-white border-t border-b sm:border-l sm:border-r sm:rounded shadow mb-6">
+      <div class="border-b px-6">
+        <div class="flex justify-between -mb-px">
+          <div class="lg:hidden text-blue-dark py-4 text-lg">
+            Gallery Manager
+          </div>
+          <div class="">
+        
+	  </div>
+        </div>
+      </div>
+      <div class="flex items-center px-6 lg:hidden">
+		<!-- search -->
+		<!-- /search -->
+
+			<table>
+				<thead>
+					<th class="text-left">Caption</th>
+					<th class="text-center">Media</th>
+					<th class="text-left">Modified</th>
+					<th>	<a class="px-3 py-2 bg-green-400 rounded" href="{{url_for('.media_action')}}">New</a></td>
+				</thead>
+				<tbody>
+					{% for m in media.items %}
+					<tr>
+						<td>{{m.name}}</td>
+						<td class="text-center">
+							{% if m.filename %}
+								<img src="{{m.imgsrc}}" alt="{{m.name}}" class="h-24 w-24 rounded">
+							{% endif %}
+						</td>
+						<td>{{m.modified|pretty_date}}</td>
+						<td>
+							<a class="px-3 py-2 rounded bg-blue-500 font-bold text-white" 
+							   href="{{url_for('.media_action', uuid=m.uuid)}}">Edit</a>
+							<a class="px-3 py-2 rounded bg-red-500 font-bold text-white" href="{{url_for('.media_delete', uuid=m.uuid)}}">Delete</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+      </div>
+</div>
+
+{% endblock %}

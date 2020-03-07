@@ -1,0 +1,62 @@
+{% extends 'dashboard/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block title %} Pages {% endblock %}
+
+{% block page_content %}
+<div class="bg-white rounded-lg shadow-lg">
+	<div class="bg-orange-500 border-b-2 border-orange-600 rounded-tl-lg rounded-tr-lg px-3 py-2">
+		<h5 class="font-thin text-xl text-white">
+			Page Manager
+		</h5>
+	</div>
+	<div class="p-5">
+		<div class="flex justify-between items-center mb-4">
+			<div class="w-2/3">
+				{{macro.search_form() }}
+				     
+			</div>
+			<div class="px-4">
+				<a class="bg-green-400 font-bold text-sm rounded px-6 py-2 text-white" 
+				   href="{{url_for('.page_action')}}">New</a>
+			</div>
+		</div>
+		<div class="data">
+		
+	<table>
+				<thead>
+					<th class="text-left">Title</th>
+					<th class="text-left">Content</th>
+					<th class="">Published</th>
+					<th class="text-left">Modified</th>
+					<th></td>
+				</thead>
+				<tbody>
+					{% for p in pages.items %}
+					<tr>
+						<td>{{p.title}}</td>
+						<td class="text-xs text-gray-500">{{p.body|truncate(30)}}</td>
+						<td class="text-xs text-center">
+							{% if p.published %}
+							<span class="bg-blue-500 text-white px-2 py-1 rounded">Yes</span>
+							{% else %}
+							<span class="bg-red-500 text-white px-2 py-1 rounded">No</span>
+							{% endif %}
+						</td>
+						<td class="text-xs text-center text-gray-500">{{p.modified|pretty_date}}</td>
+						<td>
+							<a class="px-3 py-2 rounded bg-blue-500 font-bold text-white" 
+							   href="{{url_for('.page_action', uuid=p.uuid)}}">Edit</a>
+							<a class="px-3 py-2 rounded bg-red-500 font-bold text-white" href="{{url_for('.page_delete', uuid=p.uuid)}}">Delete</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+
+		</div>
+		<div class="pager">pager</div>
+	</div>
+</div>
+  
+{% endblock %}

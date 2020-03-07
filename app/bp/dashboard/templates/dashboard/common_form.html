@@ -1,0 +1,47 @@
+{% extends 'dashboard/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block title %}{% if data %} Edit {{model}}: {{data.title}} {% else %} New {{model}} {% endif %}{% endblock %}
+
+{% block page_content %}
+<div class="bg-white rounded-lg shadow-lg">
+	<div class="bg-orange-500 border-b-2 border-orange-600 rounded-tl-lg rounded-tr-lg px-3 py-2">
+		<h5 class="font-thin text-xl text-white">
+			{% if data %} 
+				Edit {{model}}: [{{data.title}}] 
+			{%else%} 
+				New {{model}} 
+			{% endif %}
+		</h5>
+	</div>
+	<div class="p-5">
+		  <div class="flex justify-between">
+			<form method="post" enctype="multipart/form-data" novalidate>
+				{{form.hidden_tag()}}
+				{{macro.render_input_field(form.title) }}
+				{{macro.render_textarea_field(form.body, 10)}}
+				<div class="flex items-center">
+					{% if data.image %}
+						<img src="{{data.imgsrc}}" class="h-32 mr-4 rounded opacity-50" alt="{{data.title}}">
+					{% endif %}
+					{{macro.render_file_field(form.image)}}
+				</div>
+				{{macro.render_checkbox_field(form.published)}}
+				<div class="mb-4  pt-4">
+					<button class="bg-green-500 px-6 py-3 font-bold rounded text-white" 
+						type="submit">Save</button>
+				</div>
+			</form>
+			{% if data.uuid %}
+				<div class="w-1/3">
+					<h2 class="text-xl font-medium mb-4">Tags</h2>
+					{% for t in data.tags %}
+					<span class="bg-green-200 rounded-full px-2 py-1">{{t.title}}</span>
+					{% endfor %}
+					{{macro.quick_form(tagForm, action=url_for('.post_tag', uuid=data.uuid))}}
+				</div>
+			{% endif %}
+		  </div>
+	</div>
+</div>
+ {% endblock %}

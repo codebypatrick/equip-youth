@@ -90,9 +90,9 @@
 	
         <div class=" mx-auto flex flex-wrap items-center">
 		    <div class="flex w-full md:w-1/2 justify-center md:justify-start text-white font-extrabold">
-			    <a class="flex items-center text-white no-underline hover:text-white hover:no-underline" href="{{url_for('.index')}}">
-				 <span class="text-2xl pl-2">{% if g.app_name %}{{g.app_name}}{% endif %}</span>
-
+			    <a class="text-white no-underline hover:text-white hover:no-underline" href="{{url_for('.index')}}">
+				    <span class="text-2xl pl-2">{% if g.app_name %}{{g.app_name}}{% endif %}</span>
+				</a>
             </div>
 			<div class="flex w-full pt-2 justify-between md:w-1/2 md:justify-end">
 				<ul class="list-reset flex justify-between flex-1 md:flex-none items-center">
@@ -123,8 +123,15 @@
 			</div>
         </div>
     </nav>
-
+	<div class="bg-white flex">
+		<div class="w-4/5">
 	{% block page_content %}{% endblock %}
+
+		</div>
+		<div class="w-2/5">
+			sidr bar
+		</div>
+	</div>
  <!-- start footer -->
     <footer class="relative bg-gray-900 text-white px-4 sm:px-8 lg:px-16 xl:px-40 2xl:px-64 py-12 lg:py-24">
       <div class="flex flex-col md:flex-row">

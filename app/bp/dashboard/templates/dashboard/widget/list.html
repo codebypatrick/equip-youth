@@ -1,0 +1,47 @@
+{% extends 'dashboard/layout.html' %}
+{% import 'macros.html' as macro %}
+
+{% block title %} Widgets {% endblock %}
+
+{% block page_content %}
+  <div class="bg-white border-t border-b sm:border-l sm:border-r sm:rounded shadow mb-6">
+      <div class="border-b px-6">
+        <div class="flex justify-between -mb-px">
+          <div class="lg:hidden text-blue-dark py-4 text-lg">
+            Widget Manager
+          </div>
+          <div class="">
+        
+	  </div>
+        </div>
+      </div>
+      <div class="flex items-center px-6 lg:hidden">
+		<!-- search -->
+		<!-- /search -->
+
+			<table>
+				<thead>
+					<th class="text-left">Name</th>
+					<th class="text-left">Value</th>
+					<th class="text-left">Modified</th>
+					<th>	<a class="px-3 py-2 bg-green-400 rounded" href="{{url_for('.widget_action')}}">New</a></td>
+				</thead>
+				<tbody>
+					{% for w in widgets.items %}
+					<tr>
+						<td>{{w.name}}</td>
+						<td class="text-sm text-grey-400">{{w.value}}</td>
+						<td>{{w.modified|pretty_date}}</td>
+						<td>
+							<a class="px-3 py-2 rounded bg-blue-500 font-bold text-white" 
+							   href="{{url_for('.widget_action', uuid=w.uuid)}}">Edit</a>
+							<a class="px-3 py-2 rounded bg-red-500 font-bold text-white" href="{{url_for('.widget_delete', uuid=w.uuid)}}">Delete</a>
+						</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+      </div>
+</div>
+
+{% endblock %}

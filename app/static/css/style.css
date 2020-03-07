@@ -11432,7 +11432,8 @@ th {
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
-  border-bottom-width: 1px;
+  border-bottom-width: 2px;
+  background-color: #f7fafc;
   border-color: #edf2f7;
   font-size: 0.75rem;
   font-weight: 600;
@@ -11630,6 +11631,32 @@ td {
 .sidebar-link-active {
   color: #fff;
   background-color: #ed8936
+}
+
+.markdown {
+  line-height: 2
+}
+
+.markdown p {
+  line-height: 2;
+  margin-bottom: 1rem
+}
+
+.markdown ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  margin-bottom: 1rem
+}
+
+.markdown li {
+  padding-left: 1rem;
+  padding-right: 1rem
+}
+
+.markdown h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem
 }
 
 @media (min-width: 640px) {
